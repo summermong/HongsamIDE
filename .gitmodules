@@ -1,0 +1,9 @@
+[submodule "back-was/src/main/resources/config"]
+	path = back-was/src/main/resources/config
+	url = https://github.com/Goorm-Hongsam/config
+[submodule "back-ide/src/main/resources/config"]
+	path = back-ide/src/main/resources/config
+	url = https://github.com/Goorm-Hongsam/config
+[submodule "back-chat/src/main/resources/config"]
+	path = back-chat/src/main/resources/config
+	url = https://github.com/Goorm-Hongsam/config
