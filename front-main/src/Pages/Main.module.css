@@ -1,0 +1,52 @@
+body {
+  font-family: 'NeoDunggeunmoPro-Regular';
+  height: 90vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+}
+
+.Main {
+  display: flex;
+  margin: 0 auto;
+  flex-direction: column;
+  justify-content: center;
+}
+
+:root {
+  --main-color: #04c92f;
+  --mainDark-color: #16b438;
+}
+
+.subtitle {
+  display: inline;
+  margin: 0 auto;
+  color: black;
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.title {
+  display: inline;
+  margin: 0 auto;
+  color: var(--main-color);
+  font-size: 42px;
+  letter-spacing: 0.2cm;
+}
+
+.btn {
+  margin: 30px auto;
+  width: 100%;
+  border: none;
+  border-radius: 5px;
+  padding: 15px 20px;
+  color: white;
+  background-color: var(--main-color);
+  font-family: 'NeoDunggeunmoPro-Regular';
+  cursor: pointer;
+}
+
+.btn:hover {
+  background-color: var(--mainDark-color);
+}
