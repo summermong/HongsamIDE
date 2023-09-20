@@ -62,12 +62,10 @@ const Login = () => {
         {errors.password && errors.password.type === 'required' && (
           <p>이 칸을 입력해주세요.</p>
         )}
-
+        <Link to={'/signup'}>Sign up</Link>
         <button className={styles.btn} type="submit">
           Login
         </button>
-
-        <Link to={'/signup'}>Sign up</Link>
       </form>
     </div>
   );

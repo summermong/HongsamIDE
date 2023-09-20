@@ -24,6 +24,8 @@
 }
 
 form {
+  display: flex;
+  flex-direction: column;
   width: 100%;
   max-width: 400px;
   margin: 0 auto;
@@ -55,7 +57,7 @@ label {
 }
 
 .btn {
-  margin: 20px auto;
+  margin: 10px auto;
   width: 100%;
   border: none;
   border-radius: 5px;
@@ -72,9 +74,12 @@ label {
 
 a {
   display: block;
+  width: 100%;
   text-align: right;
   text-decoration: none;
   color: var(--main-color);
+  padding-top: 10px;
+  font-size: 14px;
 }
 
 p {
