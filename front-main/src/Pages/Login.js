@@ -1,5 +1,4 @@
 import React, { useForm } from 'react-hook-form';
-import { useRef } from 'react';
 import styles from './Login.module.css';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
@@ -8,18 +7,17 @@ const Login = () => {
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm();
 
-  const onLogin = ({ username, password }) => {
-    const requestData = {
-      username,
+  const onLogin = ({ email, password }) => {
+    const Data = {
+      email,
       password,
     };
 
     axios // 수정 필요
-      .post('/', requestData, {
+      .post('/login', Data, {
         headers: {
           'Content-Type': 'application/json',
           'ngrok-skip-browser-warning': true,
@@ -33,25 +31,22 @@ const Login = () => {
       });
   };
 
-  const password = useRef();
-  password.current = watch('password');
-
   return (
     <div className={styles.Login}>
       <div className={styles.subtitle}>Step for Developer</div>
       <div className={styles.title}>Hongsam IDE</div>
       <form className={styles.form} onSubmit={handleSubmit(onLogin)}>
-        <label>Name</label>
+        <label>ID</label>
         <input
-          name="username"
-          type="text"
+          name="email"
+          type="email"
           autoComplete="on"
-          placeholder="닉네임을 입력하세요."
-          {...register('username', {
+          placeholder="아이디를 입력하세요."
+          {...register('email', {
             required: true,
           })}
         />
-        {errors.username && errors.username.type === 'required' && (
+        {errors.email && errors.email.type === 'required' && (
           <p>이 칸을 입력해주세요.</p>
         )}
         <label>Password</label>

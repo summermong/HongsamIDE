@@ -80,6 +80,7 @@ a {
 p {
   font-size: 12px;
   padding-bottom: 5px;
+  color: var(--alert-color);
 }
 
 p::before {
