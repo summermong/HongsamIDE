@@ -1,22 +1,10 @@
-body {
-  font-family: 'NeoDunggeunmoPro-Regular';
-  height: 90vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 0;
-}
-
 .Main {
   display: flex;
   margin: 0 auto;
   flex-direction: column;
   justify-content: center;
-}
-
-:root {
-  --main-color: #04c92f;
-  --mainDark-color: #16b438;
+  height: 90vh;
+  align-items: center;
 }
 
 .subtitle {
@@ -37,7 +25,7 @@ body {
 
 .btn {
   margin: 30px auto;
-  width: 100%;
+  width: 350px;
   border: none;
   border-radius: 5px;
   padding: 15px 20px;
