@@ -37,7 +37,7 @@ const Signup = () => {
   password.current = watch('password');
 
   return (
-    <div className={styles.Login}>
+    <div className={styles.Signup}>
       <div className={styles.subtitle}>Step for Developer</div>
       <div className={styles.title}>Hongsam IDE</div>
       <form className={styles.form} onSubmit={handleSubmit(onSignup)}>

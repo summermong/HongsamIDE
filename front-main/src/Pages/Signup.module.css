@@ -1,9 +1,13 @@
-.Login {
+body {
+  height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
-  height: 100vh;
+}
+
+.Signup {
+  display: flex;
+  flex-direction: column;
   margin: 0 auto;
 }
 
