@@ -41,7 +41,7 @@ input {
   background-color: var(--lightGray-color);
   padding: 15px 15px;
   margin-bottom: 5px;
-  font-size: 12px;
+  font-size: 14px;
   font-family: 'NeoDunggeunmoPro-Regular';
 }
 
@@ -52,8 +52,8 @@ label {
   margin-bottom: 5px;
   margin-top: 10px;
   color: var(--main-color);
-  font-size: 14px;
-  font-weight: 500;
+  font-size: 16px;
+  font-weight: 300;
 }
 
 .btn {
@@ -65,6 +65,7 @@ label {
   color: white;
   background-color: var(--main-color);
   font-family: 'NeoDunggeunmoPro-Regular';
+  font-size: 16px;
   cursor: pointer;
 }
 
@@ -83,7 +84,7 @@ a {
 }
 
 p {
-  font-size: 12px;
+  font-size: 14px;
   padding-bottom: 5px;
   color: var(--alert-color);
 }
