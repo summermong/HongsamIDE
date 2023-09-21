@@ -1,0 +1,48 @@
+.NavBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 20rem;
+  padding: 14px 21px;
+  background-color: #efefef;
+  border: 1px solid #d2d2d2;
+}
+
+.NavBarTitle {
+  font-size: 36px;
+  color: #04c92f;
+  cursor: pointer;
+}
+
+.NavBarLogin {
+  font-size: 25px;
+  color: #000;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.NavBarLogin:hover {
+  opacity: 0.4;
+}
+
+.NavBarIcon {
+  font-size: 25px;
+  margin-left: 10px;
+}
+
+@media (max-width: 768px) {
+  .NavBar {
+    height: 0.5rem;
+  }
+  .NavBarTitle {
+    font-size: 24px;
+  }
+  .NavBarLogin {
+    font-size: 18px;
+  }
+  .NavBarIcon {
+    font-size: 16px;
+    margin-bottom: 0.1rem;
+  }
+}
