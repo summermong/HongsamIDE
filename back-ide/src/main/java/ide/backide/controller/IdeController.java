@@ -16,10 +16,15 @@ import java.io.IOException;
 public class IdeController {
     private final JavaCompilerService javaCompilerService;
     private final FileIOService fileIOService;
-    @PostMapping("/{questionId}/{memberUUID}")
-    public void compiler(@PathVariable String questionId, @PathVariable String memberUUID, @RequestBody RequestCodeDTO requestCode) throws Exception {
-        fileIOService.saveNewFile(requestCode.getRequestCode(), questionId);
+    @PostMapping("/{questionId}")
+    public void getCompileResult(@PathVariable String questionId, @RequestBody RequestCodeDTO requestCode) throws Exception {
+        fileIOService.saveFile(requestCode.getRequestCode(), questionId);
         javaCompilerService.compiler(questionId);
+    }
+
+    @GetMapping("/{questionId}")
+    public String getSavedFile(@PathVariable String questionId) throws IOException {
+        return fileIOService.findFileByName(questionId);
     }
 
 }
