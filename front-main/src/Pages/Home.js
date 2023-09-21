@@ -1,4 +1,5 @@
 import Container from "../components/Container";
+import NavBar from "../components/NavBar";
 import styles from "./Home.module.css";
 
 const Home = () => {
@@ -16,6 +17,7 @@ const Home = () => {
 
   return (
     <div className={styles.Home}>
+      <NavBar />
       <div className={styles.Content}>
         <div className={styles.title}>문제 목록</div>
         {containers.map((container) => (

@@ -7,7 +7,7 @@
 }
 
 .Content {
-  padding: 6.875rem 10.75rem;
+  padding: 4.875rem 10.75rem;
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -20,9 +20,6 @@
 }
 
 @media (max-width: 768px) {
-  .Home {
-    padding: 2rem 2rem;
-  }
   .Content {
     padding: 2rem 2rem;
   }
