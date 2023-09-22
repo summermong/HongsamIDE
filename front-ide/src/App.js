@@ -1,15 +1,16 @@
 /** @format */
 
-import logo from './logo.svg';
 import './App.css';
 import QuestionBar from './components/QuestionBar';
-import CodeEditor from './components/CodeEditor';
+import JavaCodeEditor from './components/JavaCodeEditor';
 
 function App() {
   return (
-    <div className='flex'>
-      <QuestionBar></QuestionBar>
-      <CodeEditor></CodeEditor>
+    <div className='h-screen'>
+      <div className='flex'>
+        <QuestionBar></QuestionBar>
+        <JavaCodeEditor></JavaCodeEditor>
+      </div>
     </div>
   );
 }
