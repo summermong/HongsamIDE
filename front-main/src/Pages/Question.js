@@ -1,6 +1,6 @@
-import Container from "../components/Container";
-import NavBar from "../components/NavBar";
-import styles from "./Home.module.css";
+import Container from '../components/Container';
+import NavBar from '../components/NavBar';
+import styles from './Question.module.css';
 
 const Home = () => {
   const containers = [

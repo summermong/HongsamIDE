@@ -1,16 +1,16 @@
-import React from "react";
-import styles from "./NavBar.module.css";
-import { FaCog } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
+import React from 'react';
+import styles from './NavBar.module.css';
+import { FaCog } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
 
 const NavBar = () => {
   const navigate = useNavigate();
   const handleLoginClick = () => {
-    console.log("로그인 버튼을 눌렀습니다.");
+    console.log('로그인 버튼을 눌렀습니다.');
   };
 
   const navigateToHome = () => {
-    navigate("/home");
+    navigate('/home');
   };
 
   return (
@@ -19,7 +19,7 @@ const NavBar = () => {
         Hongsam IDE
       </div>
       <div className={styles.NavBarLogin} onClick={handleLoginClick}>
-        로그인
+        2514o_o@naver.com
         <FaCog className={styles.NavBarIcon} />
       </div>
     </div>
