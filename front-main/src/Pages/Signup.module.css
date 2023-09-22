@@ -8,7 +8,7 @@ body {
 .Signup {
   display: flex;
   flex-direction: column;
-  margin: 0 auto;
+  margin: 10px;
 }
 
 .subtitle {
@@ -44,21 +44,38 @@ input {
   padding: 15px 15px;
   margin-bottom: 5px;
   font-size: 14px;
-  font-family: 'NeoDunggeunmoPro-Regular';
 }
 
 label {
   line-height: 2;
   text-align: left;
   display: block;
-  margin-bottom: 5px;
-  margin-top: 10px;
+  margin: 10px 0 5px;
   color: var(--main-color);
   font-size: 16px;
   font-weight: 500;
 }
 
-.btn {
+input[type='text'] {
+  width: 300px;
+}
+
+.id {
+  display: flex;
+  gap: 10px;
+}
+
+.confirmID_btn {
+  box-sizing: border-box;
+  width: 90px;
+  border: none;
+  border-radius: 5px;
+  margin-bottom: 5px;
+  background-color: var(--main-color);
+  color: white;
+}
+
+.submit_btn {
   margin: 20px auto;
   width: 100%;
   border: none;
@@ -66,12 +83,11 @@ label {
   padding: 15px;
   color: white;
   background-color: var(--main-color);
-  font-family: 'NeoDunggeunmoPro-Regular';
   cursor: pointer;
   font-size: 16px;
 }
 
-.btn:hover {
+.submit_btn:hover {
   background-color: var(--mainDark-color);
 }
 
