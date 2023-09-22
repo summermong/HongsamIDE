@@ -1,7 +1,7 @@
 import React, { useForm } from 'react-hook-form';
 import styles from './Login.module.css';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 const Login = () => {
   const {
@@ -10,21 +10,24 @@ const Login = () => {
     formState: { errors },
   } = useForm();
 
+  /* 로그인 성공 시 라우팅 내비게이터 */
+  const navigate = useNavigate();
+
+  /* 로그인 함수 */
   const onLogin = ({ email, password }) => {
     const Data = {
       email,
       password,
     };
 
-    axios // 수정 필요
-      .post('/login', Data, {
-        headers: {
-          'Content-Type': 'application/json',
-          'ngrok-skip-browser-warning': true,
-        },
-      })
+    axios
+      .post('/members/login', Data)
       .then((response) => {
-        console.log(response.data);
+        if (response.status === 200) {
+          // Q. 이 정보를 전역으로 사용하려면?
+          console.log(response.data.name);
+          navigate('/home');
+        }
       })
       .catch((error) => {
         console.error(error);
@@ -63,7 +66,7 @@ const Login = () => {
           <p>이 칸을 입력해주세요.</p>
         )}
         <Link to={'/signup'}>Sign up</Link>
-        <button className={styles.btn} type="submit">
+        <button className={styles.login_btn} type="submit">
           Login
         </button>
       </form>
