@@ -1,7 +1,7 @@
 /** @format */
 
 import React, { useEffect, useState } from 'react';
-import ChevronDown from '../icon/ChevronDown';
+import ChevronDown from '../../icon/ChevronDown';
 import TermTopBar from './TermTopBar';
 
 export default function ResultTerm() {

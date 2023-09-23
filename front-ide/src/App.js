@@ -1,8 +1,8 @@
 /** @format */
 
 import './App.css';
-import QuestionBar from './components/QuestionBar';
-import JavaCodeEditor from './components/JavaCodeEditor';
+import QuestionBar from './components/ide/QuestionBar';
+import JavaCodeEditor from './components/ide/JavaCodeEditor';
 
 function App() {
   return (

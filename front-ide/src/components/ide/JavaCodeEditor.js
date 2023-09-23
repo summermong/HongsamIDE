@@ -3,7 +3,7 @@
 import React, { useEffect, useRef } from 'react';
 import Editor, { useMonaco } from '@monaco-editor/react';
 import SolarizedLigthTheme from 'monaco-themes/themes/Solarized-light.json';
-import { javaDefaultValue } from '../defaultValues';
+import { javaDefaultValue } from '../../defaultValues';
 
 import ResultTerm from './ResultTerm';
 import IdeTopBar from './IdeTopBar';
@@ -41,7 +41,7 @@ export default function JavaCodeEditor() {
   }, [monaco]);
   const showValue = () => {
     alert(editorRef.current.getValue());
-    console.log(editorRef.current.getValue());
+    console.log(JSON.stringify(editorRef.current.getValue()));
   };
 
   return (

@@ -1,7 +1,7 @@
 /** @format */
 
 import React from 'react';
-import ChevronDown from '../icon/ChevronDown';
+import ChevronDown from '../../icon/ChevronDown';
 
 export default function TermTopBar() {
   return (
