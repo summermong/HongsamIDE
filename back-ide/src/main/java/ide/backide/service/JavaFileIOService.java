@@ -7,7 +7,7 @@ import java.io.*;
 
 @Service
 @Slf4j
-public class FileIOService {
+public class JavaFileIOService {
 
     public void saveFile(String newCode, String title) throws IOException {
         File javaFile = new File("src/main/resources/question/" + title + ".java");

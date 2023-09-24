@@ -1,7 +1,7 @@
 package ide.backide.controller;
 
 import ide.backide.domain.RequestCodeDTO;
-import ide.backide.service.FileIOService;
+import ide.backide.service.JavaFileIOService;
 //import ide.backide.service.IdeService;
 import ide.backide.service.JavaCompilerService;
 import lombok.RequiredArgsConstructor;
@@ -15,16 +15,18 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class IdeController {
     private final JavaCompilerService javaCompilerService;
-    private final FileIOService fileIOService;
+    private final JavaFileIOService javaFileIOService;
+
+
     @PostMapping("/{questionId}")
     public void getCompileResult(@PathVariable String questionId, @RequestBody RequestCodeDTO requestCode) throws Exception {
-        fileIOService.saveFile(requestCode.getRequestCode(), questionId);
+        javaFileIOService.saveFile(requestCode.getRequestCode(), questionId);
         javaCompilerService.compiler(questionId);
     }
 
     @GetMapping("/{questionId}")
     public String getSavedFile(@PathVariable String questionId) throws IOException {
-        return fileIOService.findFileByName(questionId);
+        return javaFileIOService.findFileByName(questionId);
     }
 
 }
