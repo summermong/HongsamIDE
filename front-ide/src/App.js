@@ -8,8 +8,8 @@ function App() {
   return (
     <div className='h-screen'>
       <div className='flex'>
-        <QuestionBar></QuestionBar>
-        <JavaCodeEditor></JavaCodeEditor>
+        <QuestionBar />
+        <JavaCodeEditor />
       </div>
     </div>
   );
