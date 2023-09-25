@@ -1,0 +1,99 @@
+@import '../reset.css';
+
+.Chat {
+  width: 300px;
+  height: 500px;
+  background-color: white;
+  border: 1px solid gray;
+  margin: 0 auto;
+}
+
+/* 헤더 부분 */
+
+.header {
+  height: 30px;
+  background-color: var(--lightGray-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 3px 10px;
+  font-size: 24px;
+}
+
+.title {
+  color: var(--main-color);
+}
+
+/* 채팅 시간 */
+
+.date {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 14px;
+}
+
+/* 채팅 내용 */
+.chat {
+  display: flex;
+  flex-direction: column;
+  height: 410px;
+
+  overflow-y: scroll;
+  padding-bottom: 20px;
+}
+
+::-webkit-scrollbar {
+  width: 7px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.3);
+  border-radius: 5px;
+}
+
+.chat .user {
+  display: flex;
+  justify-content: right;
+  align-items: flex-end;
+  margin-top: 20px;
+}
+
+.chat .user_message {
+  background-color: var(--lightGray-color);
+  padding: 10px;
+  border-radius: 10px;
+  margin-right: 10px;
+}
+
+.chat .user_time {
+  padding: 0 10px;
+  font-size: 12px;
+}
+
+.chat .another {
+  display: flex;
+  justify-content: left;
+  align-items: flex-end;
+  margin-top: 20px;
+}
+
+.chat .another_message {
+  background-color: var(--lightGray-color);
+  padding: 10px;
+  border-radius: 10px;
+  margin-left: 10px;
+}
+
+.chat .another_time {
+  padding: 0 10px;
+  font-size: 12px;
+}
+
+/* 메세지 인풋 창 */
+
+.message_input {
+  height: 34px;
+  width: 100%;
+  background-color: var(--lightGray-color);
+  font-size: 16px;
+}
