@@ -1,3 +1,5 @@
+@import '../reset.css';
+
 .Container {
   display: flex;
   flex-direction: column;
