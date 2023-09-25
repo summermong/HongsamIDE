@@ -7,8 +7,9 @@ import java.io.*;
 
 @Service
 @Slf4j
-public class JavaFileIOService {
+public class JavaFileIOService implements FileIOService{
 
+    @Override
     public void saveFile(String newCode, String title) throws IOException {
         File javaFile = new File("src/main/resources/question/" + title + ".java");
         FileWriter writer = new FileWriter(javaFile);
@@ -16,6 +17,7 @@ public class JavaFileIOService {
         writer.close();
     }
 
+    @Override
     public String findFileByName(String title) throws IOException {
         File javaFile = new File("src/main/resources/question/" + title + ".java");
         BufferedReader br = new BufferedReader(new FileReader(javaFile));

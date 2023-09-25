@@ -30,7 +30,7 @@ import java.util.Locale;
 
 /**
  * 구현 순서
- * 1. 정상 흐름에서 우리가 여러개 입력값 넣어주고 출력나오는거 HashMap으로 뽑기 -> 출력.txt랑 비교해서 다 맞았는지 하나라도 틀렸는지 확인 --> 정상 흐름에서 응답값 전달
+ * 1. 정상 흐름에서 우리가 여러개 입력값 넣어주고 출력나오는거 output.txt -> answer.txt랑 비교해서 다 맞았는지 하나라도 틀렸는지 확인 --> 정상 흐름에서 응답값 전달
  * 2. 컴파일 에러, 런타임 예외 리턴 처리
  *
  *
@@ -42,8 +42,10 @@ import java.util.Locale;
  */
 @Slf4j
 @Service
-public class JavaCompilerService {
-    public void compiler(String questionId) throws Exception {
+public class JavaCompilerService implements CompilerService{
+
+    @Override
+    public String compiler(String questionId) throws Exception {
 
         File javaFile = new File("src/main/resources/question/" + questionId + ".java"); // 만들어놓은 .java 파일 불러오는 부분
         JavaCompiler compiler = ToolProvider.getSystemJavaCompiler(); // 컴파일할 수 있는 컴파일러 모듈만 생성
@@ -67,6 +69,11 @@ public class JavaCompilerService {
 
 
         if (success) {
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            PrintStream printStream = new PrintStream(outputStream);
+            PrintStream originalOut = System.out; // 원래의 표준 출력 보관
+            System.setOut(printStream); // 표준 출력을 ByteArrayOutputStream으로 리다이렉션
+
             // 컴파일된 .class 파일이 있는 디렉토리를 클래스 로더에 추가
             URLClassLoader classLoader = URLClassLoader.newInstance(new URL[]{new File("src/main/resources/question").toURI().toURL()});
 
@@ -75,22 +82,52 @@ public class JavaCompilerService {
 
             // 메소드 호출
             Method mainMethod = loadedClass.getMethod("main", String[].class);
+            InputStream originalIn = System.in;
+            System.setIn(new FileInputStream("src/main/resources/answer/input.txt"));
             try {
                 mainMethod.invoke(null, (Object) new String[]{});
             } catch (Exception e) {
-                System.out.println(e.getCause());
+                return e.getCause().toString();
             }
             // 클래스 로더 닫기
             classLoader.close();
+            System.setIn(originalIn);
+            System.setOut(originalOut);
+            FileOutputStream resultFile = new FileOutputStream("src/main/resources/answer/output.txt");
+            resultFile.write(outputStream.toByteArray());
+            resultFile.close();
+            outputStream.reset();
+            if(compareFiles("src/main/resources/answer/output.txt", "src/main/resources/answer/answer.txt")) {
+                return "정답입니다.";
+            } else {
+                return "틀렸습니다.";
+            }
 
         } else {   //컴파일 에러 발생
             DiagnosticCollector<JavaFileObject> diagnostics = diag;
             for (Diagnostic<? extends JavaFileObject> diagnostic : diagnostics.getDiagnostics()) {
                 sb.append("Error on line " + diagnostic.getLineNumber() + ": " + diagnostic.getMessage(Locale.ENGLISH) + "\n");
             }
-            System.out.println(sb);
+            return sb.toString();
         }
 
+    }
+    private static boolean compareFiles(String outputPath, String answerPath) {
+        try {
+            BufferedReader outBr = new BufferedReader(new FileReader(outputPath));
+            BufferedReader ansBr = new BufferedReader(new FileReader(answerPath));
+
+            String outLine, ansLine;
+            while((outLine = outBr.readLine()) != null && (ansLine = ansBr.readLine()) != null) {
+                if (!outLine.equals(ansLine)) {
+                    return false;
+                }
+            }
+            return true;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
 }
