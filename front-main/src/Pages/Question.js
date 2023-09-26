@@ -1,5 +1,5 @@
-import Container from '../components/Container';
-import NavBar from '../components/NavBar';
+import Container from '../Components/Container';
+import NavBar from '../Components/NavBar';
 import styles from './Question.module.css';
 
 const Home = () => {

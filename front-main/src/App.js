@@ -4,7 +4,7 @@ import Main from './Pages/Main';
 import Login from './Pages/Login';
 import Signup from './Pages/Signup';
 import Question from './Pages/Question';
-import Chat from './components/Chat';
+import Chat from './Components/Chat';
 
 function App() {
   return (

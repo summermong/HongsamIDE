@@ -65,8 +65,8 @@ const Signup = () => {
   const emailInputRef = useRef(null);
 
   /* 비밀번호 일치를 위한 useRef */
-  const password = useRef();
-  password.current = watch('password');
+  const passwordInputRef = useRef(null);
+  passwordInputRef.current = watch('password');
 
   return (
     <div className={styles.Signup}>
@@ -123,7 +123,7 @@ const Signup = () => {
           placeholder="비밀번호를 다시 입력해주세요."
           {...register('confirm', {
             required: true,
-            validate: (value) => value === password.current,
+            validate: (value) => value === passwordInputRef.current,
           })}
         />
         {errors.confirm && errors.confirm.type === 'required' && (
