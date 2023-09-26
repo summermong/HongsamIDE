@@ -2,6 +2,7 @@ import React, { useForm } from 'react-hook-form';
 import styles from './Login.module.css';
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
+import { useAuth } from './AuthContext';
 
 const Login = () => {
   const {
@@ -9,6 +10,8 @@ const Login = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
+
+  const { login } = useAuth();
 
   /* 로그인 성공 시 라우팅 내비게이터 */
   const navigate = useNavigate();
@@ -26,8 +29,7 @@ const Login = () => {
       })
       .then((response) => {
         if (response.status === 200) {
-          // Q. 이 정보를 전역으로 사용하려면?
-          console.log(response.data.name);
+          login(response.data);
           navigate('/question');
         }
       })
