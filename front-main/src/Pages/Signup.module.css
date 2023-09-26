@@ -75,6 +75,7 @@ input[type='text'] {
   margin-bottom: 5px;
   background-color: var(--main-color);
   color: white;
+  cursor: pointer;
 }
 
 .submit_btn {
