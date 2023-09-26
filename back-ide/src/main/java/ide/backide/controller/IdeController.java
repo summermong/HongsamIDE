@@ -29,7 +29,7 @@ public class IdeController {
     }
 
     @PostMapping("/{questionId}")
-    public String getCompileResult(@PathVariable String questionId, RequestCodeDTO requestCode) throws Exception {
+    public String getCompileResult(@PathVariable String questionId, @RequestBody RequestCodeDTO requestCode) throws Exception {
         fileIOService.saveFile(requestCode.getRequestCode(), questionId);
         return compilerService.compiler(questionId);
 
