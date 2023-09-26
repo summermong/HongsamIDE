@@ -1,19 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { getDate, getTime } from './ChatInfo';
 import styles from './Chat.module.css';
-
-/* 채팅 창의 날짜 */
-const date = () => {
-  const year_month_day = new Date().toISOString().slice(0, 10);
-  const week = new Date().toDateString().slice(0, 3);
-  return `${year_month_day} (${week})`;
-};
-
-/* 메세지의 시간 */
-const time = () => {
-  const hour = String(new Date().getHours()).padStart(2, '0');
-  const minute = String(new Date().getMinutes()).padStart(2, '0');
-  return `${hour}:${minute}`;
-};
 
 /* 발신자에 따라 표현되는 메세지 & CSS */
 const Message = ({ text, isUserMessage }) => {
@@ -24,7 +11,7 @@ const Message = ({ text, isUserMessage }) => {
   return (
     <div className={userClass}>
       <div className={messageClass}>{text}</div>
-      <div className={timeClass}>{time()}</div>
+      <div className={timeClass}>{getTime()}</div>
     </div>
   );
 };
@@ -35,10 +22,6 @@ const Chat = () => {
 
   /* 저장된 메세지 */
   const [messages, setMessages] = useState([
-    {
-      text: '현실에선 개발아기인 내가 이세계에서는 개발 천재!?',
-      isUserMessage: false,
-    },
     {
       text: '현실에선 개발아기인 내가 이세계에서는 개발 천재!?',
       isUserMessage: false,
@@ -75,7 +58,7 @@ const Chat = () => {
       </header>
 
       <div className={styles.chat} ref={scrollContainerRef}>
-        <div className={styles.date}>{date()}</div>
+        <div className={styles.date}>{getDate()}</div>
         {messages.map((message, index) => (
           <Message
             key={index}
