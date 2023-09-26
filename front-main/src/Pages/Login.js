@@ -21,12 +21,14 @@ const Login = () => {
     };
 
     axios
-      .post('/members/login', Data)
+      .post('https://api.hong-sam.online/members/login', Data, {
+        withCredentials: true,
+      })
       .then((response) => {
         if (response.status === 200) {
           // Q. 이 정보를 전역으로 사용하려면?
           console.log(response.data.name);
-          navigate('/home');
+          navigate('/question');
         }
       })
       .catch((error) => {

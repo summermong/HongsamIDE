@@ -18,7 +18,11 @@ const Signup = () => {
   /* 이메일 중복 검사 함수 */
   const confirmID = ({ email }) => {
     axios
-      .post('/members/signup/email-check', { email })
+      .post(
+        'https://api.hong-sam.online/members/signup/email-check',
+        { email },
+        { withCredentials: true }
+      )
       .then((response) => {
         if (response.status === 200) {
           alert('사용 가능한 이메일입니다.');
@@ -46,11 +50,11 @@ const Signup = () => {
       };
 
       axios
-        .post('/members/signup', Data)
+        .post('https://api.hong-sam.online/members/signup', Data)
         .then((response) => {
           if (response.status === 200) {
             alert('회원가입이 완료되었습니다.');
-            navigate('/home');
+            navigate('/question');
           }
         })
         .catch((error) => {
