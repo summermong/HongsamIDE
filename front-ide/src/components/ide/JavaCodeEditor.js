@@ -47,11 +47,11 @@ export default function JavaCodeEditor() {
     console.log(JSON.stringify(editorRef.current.getValue()));
     console.log(code);
     const formData = new FormData();
-    formData.append('code', JSON.stringify(code));
+    formData.append('requestCode', code);
     console.log(formData);
 
     await axios
-      .post('url', formData)
+      .post('http://localhost:8080/q1', formData, { withCredentials: true })
       .then((res) => {
         console.log(res.data);
       })
@@ -62,9 +62,10 @@ export default function JavaCodeEditor() {
 
   const fetchCode = async () => {
     await axios
-      .get('url')
+      .get('http://localhost:8080/q1', { withCredentials: true })
       .then((res) => {
         console.log(res.data);
+        setCode(res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -87,7 +88,7 @@ export default function JavaCodeEditor() {
           height='70vh'
           width='70vw'
           defaultLanguage='java'
-          defaultValue={javaDefaultValue}
+          value={code}
           onMount={handleEditorDidMount}
           options={editorOptions}
           onChange={handleEditorChange}
