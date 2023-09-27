@@ -91,7 +91,11 @@ const Signup = () => {
               pattern: /^\S+@\S+$/i,
             })}
           />
-          <button className={styles.confirmID_btn} onClick={confirmID}>
+          <button
+            className={styles.confirmID_btn}
+            onClick={confirmID}
+            type="button"
+          >
             중복 확인
           </button>
         </div>
@@ -156,11 +160,7 @@ const Signup = () => {
           <p>10자 이내로 입력해주세요.</p>
         )}
 
-        <button
-          className={styles.submit_btn}
-          disabled={!isEmailUnique}
-          type="submit"
-        >
+        <button className={styles.submit_btn} type="submit">
           Sign up
         </button>
       </form>
