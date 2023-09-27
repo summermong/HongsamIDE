@@ -2,7 +2,7 @@ import React, { useForm } from 'react-hook-form';
 import styles from './Login.module.css';
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
-import { useAuth } from './AuthContext';
+import { useAuth } from '../api/AuthContext';
 
 const Login = () => {
   const {
