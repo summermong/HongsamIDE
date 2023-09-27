@@ -4,8 +4,7 @@ import React, { useEffect, useState } from 'react';
 import ChevronDown from '../../icon/ChevronDown';
 import TermTopBar from './TermTopBar';
 
-export default function ResultTerm({ result }) {
-  const [height, setHeight] = useState(200);
+export default function ResultTerm({ result, topHeigth, handleMouseDown }) {
   const [heightMouseDown, setheightMouseDown] = useState(false);
   const mouseDownTermBorder = (e) => {
     e.preventDefault();
@@ -25,12 +24,16 @@ export default function ResultTerm({ result }) {
       console.log('nobe');
     }
   };
-  const hideTerm = (e) => {
-    e.preventDefault();
-    setHeight(0);
-  };
+
   return (
-    <div className=' overflow-y-scroll'>
+    <div
+      className='overflow-y-scroll'
+      style={{ height: `100 - ${topHeigth}%` }}
+    >
+      <div
+        className='w-full bg-slate-100 h-2 cursor-row-resize'
+        onMouseDown={handleMouseDown}
+      ></div>
       <TermTopBar />
       <div className={``}>
         <p className='pl-2'>{result}</p>
