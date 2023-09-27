@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import ChevronDown from '../../icon/ChevronDown';
 import TermTopBar from './TermTopBar';
 
-export default function ResultTerm() {
+export default function ResultTerm({ result }) {
   const [height, setHeight] = useState(200);
   const [heightMouseDown, setheightMouseDown] = useState(false);
   const mouseDownTermBorder = (e) => {
@@ -33,7 +33,7 @@ export default function ResultTerm() {
     <div className=' overflow-y-scroll'>
       <TermTopBar />
       <div className={``}>
-        <p className='pl-2'>결과 출력 터미널입니다</p>
+        <p className='pl-2'>{result}</p>
       </div>
     </div>
   );

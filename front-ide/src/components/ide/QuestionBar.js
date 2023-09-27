@@ -1,13 +1,34 @@
 /** @format */
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
-export default function QuestionBar() {
+export default function QuestionBar({ leftWidth, handleMouseDown }) {
   return (
     <div
-      style={{ height: 'calc(100vh - 42px)', marginTop: '42px' }}
-      className=' w-2/6 border overflow-y-scroll'
+      style={{
+        width: `${leftWidth}%`,
+        flexShrink: 0,
+        userSelect: 'none',
+        marginTop: '42px',
+        height: 'calc(100vh - 42px)',
+      }}
+      className='border overflow-y-scroll relative'
     >
+      {/* <div
+        style={{
+          position: 'absolute',
+          top: 0,
+          right: 0,
+          width: '10px',
+          height: '100%',
+          backgroundColor: 'gray',
+          cursor: 'col-resize',
+        }}
+      ></div> */}
+      <div
+        className='absolute right-0 h-full bg-slate-100 w-2 cursor-col-resize'
+        onMouseDown={handleMouseDown}
+      ></div>
       <div>
         <h1 className='text-lg p-5'>넷이 놀기</h1>
       </div>

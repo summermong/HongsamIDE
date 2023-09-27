@@ -9,10 +9,11 @@ import axios from 'axios';
 import ResultTerm from './ResultTerm';
 import IdeTopBar from './IdeTopBar';
 
-export default function JavaCodeEditor() {
+export default function JavaCodeEditor({ leftWidth }) {
   const monaco = useMonaco();
   const editorRef = useRef(null);
   const [code, setCode] = useState('');
+  const [result, setResult] = useState('');
 
   const editorOptions = {
     selectOnLineNumbers: true,
@@ -54,6 +55,7 @@ export default function JavaCodeEditor() {
       .post('http://localhost:8080/q1', formData, { withCredentials: true })
       .then((res) => {
         console.log(res.data);
+        setResult(res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -80,20 +82,30 @@ export default function JavaCodeEditor() {
     fetchCode();
   }, []);
 
+  const style = {
+    flexShrink: 0, // 왼쪽 컴포넌트에 크기를 양보하지 않음
+  };
+
   return (
     <>
       <IdeTopBar showValue={showValue} />
-      <div style={{ height: 'calc(100vh - 42px)', marginTop: '42px' }}>
+      <div
+        style={{
+          height: 'calc(100vh - 42px)',
+          marginTop: '42px',
+          width: `${100 - leftWidth}%`, // 오른쪽 div의 너비를 설정
+        }}
+      >
         <Editor
-          height='70vh'
-          width='70vw'
+          height='80%'
+          width='100%'
           defaultLanguage='java'
           value={code}
           onMount={handleEditorDidMount}
           options={editorOptions}
           onChange={handleEditorChange}
         />
-        <ResultTerm />
+        <ResultTerm result={result} />
       </div>
     </>
   );
