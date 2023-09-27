@@ -17,6 +17,12 @@ const Signup = () => {
 
   /* 이메일 중복 검사 함수 */
   const confirmID = ({ email }) => {
+    if (!email) {
+      alert('이메일을 입력하세요.');
+      emailInputRef.current.focus();
+      return;
+    }
+
     axios
       .post(
         'https://api.hong-sam.online/members/signup/email-check',
@@ -88,6 +94,7 @@ const Signup = () => {
               required: true,
               pattern: /^\S+@\S+$/i,
             })}
+            ref={emailInputRef}
           />
           <button className={styles.confirmID_btn} onClick={confirmID}>
             중복 확인

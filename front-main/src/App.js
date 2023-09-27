@@ -5,7 +5,7 @@ import Login from './Pages/Login';
 import Signup from './Pages/Signup';
 import Question from './Pages/Question';
 import Chat from './Chat/Chat';
-import { AuthProvider } from './Pages/AuthContext';
+import { AuthProvider } from './api/AuthContext';
 
 function App() {
   return (
