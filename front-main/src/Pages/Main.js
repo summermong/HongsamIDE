@@ -3,7 +3,7 @@ import Styles from './Main.module.css';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../api/AuthContext';
 
-const Main = () => {
+const Main = ({ isDarkMode }) => {
   const navigate = useNavigate();
   const { isLoggedIn } = useAuth();
 
@@ -14,6 +14,8 @@ const Main = () => {
       navigate('/login');
     }
   };
+
+  console.log(isDarkMode);
 
   return (
     <div className={Styles.Main}>

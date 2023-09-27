@@ -1,0 +1,47 @@
+.DarkModeToggle {
+  display: flex;
+  justify-content: flex-end;
+  margin: 0px 20px;
+  position: fixed;
+  top: 0;
+  right: 0;
+}
+
+.toggleBtn {
+  position: fixed;
+  top: 10px; /* 원하는 상단 위치 */
+  z-index: 999;
+  border: none;
+  width: 60px;
+  height: 30px;
+  display: block;
+  position: relative;
+  border-radius: 25px;
+  background-color: #fff;
+  box-shadow: 0 0 16px 3px rgba(0 0 0 / 15%);
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.toggleBtn_dark {
+  background-color: var(--main-color);
+  color: white;
+}
+
+.toggleBtn .toggleSwitch {
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  top: 50%;
+  left: 4px;
+  transform: translateY(-50%);
+  border-radius: 50%;
+  background: var(--main-color);
+  transition: all 0.4s ease-in;
+}
+
+.toggleBtn .moveRight {
+  margin-left: 30px;
+  background: white;
+  transition: all 0.4s ease-in;
+}
