@@ -28,8 +28,8 @@ const Login = () => {
         withCredentials: true,
       })
       .then((response) => {
-        if (response.status === 200) {
-          login(response.data);
+        if (response.data.status === 200) {
+          login(response.data.data);
           navigate('/question');
         }
       })

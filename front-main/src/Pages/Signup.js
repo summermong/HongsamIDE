@@ -10,41 +10,39 @@ const Signup = () => {
     handleSubmit,
     watch,
     formState: { errors },
+    setFocus,
   } = useForm();
 
   /* 이메일 중복 검사 확인 */
   const [isEmailUnique, setIsEmailUnique] = useState(false);
 
-  /* 이메일 중복 검사 함수 */
-  const confirmID = ({ email }) => {
-    if (!email) {
-      alert('이메일을 입력하세요.');
-      emailInputRef.current.focus();
-      return;
-    }
-
-    axios
-      .post(
-        'https://api.hong-sam.online/members/signup/email-check',
-        { email },
-        { withCredentials: true }
-      )
-      .then((response) => {
-        if (response.status === 200) {
-          alert('사용 가능한 이메일입니다.');
-          setIsEmailUnique(true);
-        } else {
-          alert('중복된 이메일입니다.');
-          emailInputRef.current.focus();
-        }
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  };
-
   /* 회원가입 성공 시 라우팅 내비게이터 */
   const navigate = useNavigate();
+
+  /* 이메일 중복 검사 함수 */
+  const confirmID = async () => {
+    const email = watch('email'); // 이메일 값을 가져옴
+
+    if (email) {
+      try {
+        const response = await axios.post(
+          'https://api.hong-sam.online/members/signup/email-check',
+          { email }
+        );
+
+        if (response.data.status === 200) {
+          alert('사용 가능한 이메일입니다.');
+          setIsEmailUnique(true);
+        } else if (response.data.status === 400) {
+          alert('사용할 수 없는 이메일입니다.');
+          setFocus('email');
+          setIsEmailUnique(false);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  };
 
   /* 회원가입 폼 제출 함수 */
   const onSignup = ({ email, password, username }) => {
@@ -54,11 +52,12 @@ const Signup = () => {
         password,
         username,
       };
+      console.log(Data);
 
       axios
         .post('https://api.hong-sam.online/members/signup', Data)
         .then((response) => {
-          if (response.status === 200) {
+          if (response.data.status === 200) {
             alert('회원가입이 완료되었습니다.');
             navigate('/question');
           }
@@ -70,9 +69,6 @@ const Signup = () => {
       alert('이메일 중복을 확인하세요.');
     }
   };
-
-  /* 이메일 중복 시 재입력을 위한 useRef */
-  const emailInputRef = useRef(null);
 
   /* 비밀번호 일치를 위한 useRef */
   const passwordInputRef = useRef(null);
@@ -94,7 +90,6 @@ const Signup = () => {
               required: true,
               pattern: /^\S+@\S+$/i,
             })}
-            ref={emailInputRef}
           />
           <button className={styles.confirmID_btn} onClick={confirmID}>
             중복 확인
