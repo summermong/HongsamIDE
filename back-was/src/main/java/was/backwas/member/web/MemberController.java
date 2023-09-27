@@ -44,6 +44,7 @@ public class MemberController {
         session.setAttribute("loginMember", loginMember);
         log.info("일반 유저 세션 생성");
 
+        log.info("sessionId={}", session.getId());
         session.getAttributeNames().asIterator()
                 .forEachRemaining(name -> log.info("session name={}, value={}", name, session.getAttribute(name)));
 

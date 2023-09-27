@@ -39,7 +39,7 @@ public class MemberService {
         if (member.isEmpty()) {
             return new MemberResponse(200, "사용 가능한 이메일 입니다.");
         } else {
-            return new MemberResponse(400, "이미 사용중이 이메일 입니다.");
+            return new MemberResponse(400, "이미 사용중인 이메일 입니다.");
         }
     }
 
@@ -54,7 +54,7 @@ public class MemberService {
         if (memberRepository.findPasswordByEmail(loginDto.getEmail()).getPassword().equals(loginDto.getPassword())) {
             Member member = memberRepository.findPasswordByEmail(loginDto.getEmail());
             LoginMemberResponse loginMemberResponse = new LoginMemberResponse();
-            loginMemberResponse.setName(member.getName());
+            loginMemberResponse.setUsername(member.getUsername());
             loginMemberResponse.setEmail(member.getEmail());
 
             return loginMemberResponse;

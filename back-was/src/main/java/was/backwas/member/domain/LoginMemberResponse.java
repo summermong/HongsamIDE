@@ -2,18 +2,20 @@ package was.backwas.member.domain;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter @Setter
+@ToString
 public class LoginMemberResponse {
 
     private String email;
-    private String name;
+    private String username;
 
     public LoginMemberResponse() {
     }
 
     public LoginMemberResponse(String email, String name) {
         this.email = email;
-        this.name = name;
+        this.username = name;
     }
 }
