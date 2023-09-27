@@ -33,6 +33,45 @@ export default function JavaCodeEditor({ leftWidth }) {
     editorRef.current = editor;
   };
 
+  const handleMouseDown = (e) => {
+    e.preventDefault();
+    setIsResizing(true);
+    console.log(isResizing);
+    console.log('MouseDown');
+  };
+
+  const [topHeigth, setTopGeigth] = useState(80); // 초기 왼쪽 너비 설정
+  const [isResizing, setIsResizing] = useState(false);
+
+  useEffect(() => {
+    const handleResize = (e) => {
+      if (!isResizing) return;
+      const totalHeigth = window.innerHeight;
+      const newTopHeigth = (e.clientY / totalHeigth) * 100;
+      const newBottomHeigth = 100 - newTopHeigth;
+      setTopGeigth(newTopHeigth);
+      console.log('Resizing');
+      // 오른쪽 div 너비도 설정할 수 있음: setRightWidth(newRightWidth);
+    };
+
+    const handleMouseUp = () => {
+      setIsResizing(false);
+      window.removeEventListener('mousemove', handleResize);
+      window.removeEventListener('mouseup', handleMouseUp);
+      console.log('MouseUp');
+    };
+
+    if (isResizing) {
+      window.addEventListener('mousemove', handleResize);
+      window.addEventListener('mouseup', handleMouseUp);
+    }
+
+    return () => {
+      window.removeEventListener('mousemove', handleResize);
+      window.removeEventListener('mouseup', handleMouseUp);
+    };
+  }, [isResizing]);
+
   useEffect(() => {
     if (!monaco) return;
 
@@ -82,22 +121,19 @@ export default function JavaCodeEditor({ leftWidth }) {
     fetchCode();
   }, []);
 
-  const style = {
-    flexShrink: 0, // 왼쪽 컴포넌트에 크기를 양보하지 않음
-  };
-
   return (
     <>
       <IdeTopBar showValue={showValue} />
       <div
         style={{
+          position: 'relative',
           height: 'calc(100vh - 42px)',
           marginTop: '42px',
           width: `${100 - leftWidth}%`, // 오른쪽 div의 너비를 설정
         }}
       >
         <Editor
-          height='80%'
+          height={`${topHeigth}%`}
           width='100%'
           defaultLanguage='java'
           value={code}
@@ -105,7 +141,12 @@ export default function JavaCodeEditor({ leftWidth }) {
           options={editorOptions}
           onChange={handleEditorChange}
         />
-        <ResultTerm result={result} />
+
+        <ResultTerm
+          result={result}
+          topHeigth={topHeigth}
+          handleMouseDown={handleMouseDown}
+        />
       </div>
     </>
   );
