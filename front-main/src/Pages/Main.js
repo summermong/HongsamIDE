@@ -15,8 +15,6 @@ const Main = ({ isDarkMode }) => {
     }
   };
 
-  console.log(isDarkMode);
-
   return (
     <div className={Styles.Main}>
       <div className={Styles.subtitle}>Step for Developer</div>

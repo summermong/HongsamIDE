@@ -1,17 +1,23 @@
-// DarkModeToggle.js
-
 import React, { useState, useEffect } from 'react';
 import styles from './DarkModeToggle.module.css';
 
 const DarkModeToggle = ({ isDarkMode, setIsDarkMode }) => {
   const [isToggled, setIsToggled] = useState(isDarkMode);
 
-  // 토글 버튼 클릭 시 위치 변경 및 로컬 스토리지에 설정 저장
+  useEffect(() => {
+    const storedDarkMode = localStorage.getItem('darkMode');
+    if (storedDarkMode) {
+      const darkMode = storedDarkMode === 'true';
+      setIsDarkMode(darkMode);
+      setIsToggled(darkMode);
+    }
+  }, [setIsDarkMode]);
+
   const toggleButton = () => {
     const newMode = !isToggled;
     setIsToggled(newMode);
-    localStorage.setItem('darkMode', newMode.toString()); // 설정을 로컬 스토리지에 저장
-    setIsDarkMode(newMode); // isDarkMode 상태를 업데이트
+    localStorage.setItem('darkMode', newMode.toString());
+    setIsDarkMode(newMode);
   };
 
   return (

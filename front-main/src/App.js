@@ -16,9 +16,10 @@ function App() {
   useEffect(() => {
     const storedDarkMode = localStorage.getItem('darkMode');
     if (storedDarkMode) {
-      setIsDarkMode(storedDarkMode === 'true'); // 문자열을 불리언 값으로 변환
+      const darkMode = storedDarkMode === 'true';
+      setIsDarkMode(darkMode);
     }
-  }, []);
+  }, [setIsDarkMode]);
 
   // body의 배경색을 설정
   useEffect(() => {
@@ -35,10 +36,7 @@ function App() {
     <BrowserRouter>
       <div className="App">
         <AuthProvider>
-          <DarkModeToggle
-            isDarkMode={isDarkMode}
-            setIsDarkMode={setIsDarkMode}
-          />
+          <DarkModeToggle setIsDarkMode={setIsDarkMode} />
           <Routes>
             <Route path="/" element={<Main />} />
             <Route path="/login" element={<Login />} />
