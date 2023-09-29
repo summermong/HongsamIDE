@@ -10,11 +10,12 @@ import java.io.*;
 public class JavaFileIOService implements FileIOService{
 
     @Override
-    public void saveFile(String newCode, String title) throws IOException {
+    public File saveFile(String newCode, String title) throws IOException {
         File javaFile = new File("src/main/resources/question/" + title + ".java");
         FileWriter writer = new FileWriter(javaFile);
         writer.write(newCode);
         writer.close();
+        return javaFile;
     }
 
     @Override

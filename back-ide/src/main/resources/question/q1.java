@@ -10,7 +10,8 @@ public class q1 {
     private static int[] dy = {0, -1, 1, 0, 0};
     private static int[] dx = {0, 0, 0, -1, 1};
     public static void main(String args[]) throws Exception {
-         
+        
+
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st;
         HashSet<Node> set;

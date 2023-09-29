@@ -1,6 +1,12 @@
 package ide.backide.service;
 
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.model.GetObjectRequest;
+import com.amazonaws.services.s3.model.S3Object;
+import com.amazonaws.services.s3.model.S3ObjectInputStream;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.tools.*;
@@ -42,7 +48,13 @@ import java.util.Locale;
  */
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class JavaCompilerService implements CompilerService{
+
+    private final AmazonS3 amazonS3;
+
+    @Value("${cloud.aws.s3.bucket}")
+    private String bucket;
 
     @Override
     public String compiler(String questionId) throws Exception {
@@ -83,6 +95,8 @@ public class JavaCompilerService implements CompilerService{
             // 메소드 호출
             Method mainMethod = loadedClass.getMethod("main", String[].class);
             InputStream originalIn = System.in;
+            getS3File(questionId, "input");
+            getS3File(questionId, "answer");
             System.setIn(new FileInputStream("src/main/resources/answer/input.txt"));
             try {
                 mainMethod.invoke(null, (Object) new String[]{});
@@ -112,6 +126,15 @@ public class JavaCompilerService implements CompilerService{
         }
 
     }
+
+    @Override
+    public void getS3File(String questionId, String type) throws IOException {
+        GetObjectRequest getObjectRequest = new GetObjectRequest(bucket, "admin/" + questionId + "/" + type + ".txt");
+        File file = new File("src/main/resources/answer/" + type + ".txt");
+        amazonS3.getObject(getObjectRequest, file);
+    }
+
+
     private static boolean compareFiles(String outputPath, String answerPath) {
         try {
             BufferedReader outBr = new BufferedReader(new FileReader(outputPath));
