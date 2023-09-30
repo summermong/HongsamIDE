@@ -9,6 +9,7 @@ const Login = () => {
     register,
     handleSubmit,
     formState: { errors },
+    setFocus,
   } = useForm();
 
   const { login } = useAuth();
@@ -31,6 +32,9 @@ const Login = () => {
         if (response.data.status === 200) {
           login(response.data.data);
           navigate('/question');
+        } else if (response.data.status === 400) {
+          alert('아이디 또는 비밀번호가 맞지 않습니다.');
+          setFocus('password');
         }
       })
       .catch((error) => {
