@@ -59,9 +59,9 @@ public class JavaCompilerService implements CompilerService{
     @Override
     public String compiler(String questionId) throws Exception {
 
-        File javaFile = new File("src/main/resources/question/" + questionId + ".java"); // 만들어놓은 .java 파일 불러오는 부분
+        File javaFile = new File("/tmp/" + questionId + ".java"); // 만들어놓은 .java 파일 불러오는 부분
         JavaCompiler compiler = ToolProvider.getSystemJavaCompiler(); // 컴파일할 수 있는 컴파일러 모듈만 생성
-        File outputDirectory = new File("src/main/resources/question");
+        File outputDirectory = new File("/tmp");
 
         StringBuilder sb = new StringBuilder();
 
@@ -87,7 +87,7 @@ public class JavaCompilerService implements CompilerService{
             System.setOut(printStream); // 표준 출력을 ByteArrayOutputStream으로 리다이렉션
 
             // 컴파일된 .class 파일이 있는 디렉토리를 클래스 로더에 추가
-            URLClassLoader classLoader = URLClassLoader.newInstance(new URL[]{new File("src/main/resources/question").toURI().toURL()});
+            URLClassLoader classLoader = URLClassLoader.newInstance(new URL[]{new File("/tmp").toURI().toURL()});
 
             // 클래스 로드
             Class<?> loadedClass = Class.forName(questionId, true, classLoader);
@@ -97,7 +97,7 @@ public class JavaCompilerService implements CompilerService{
             InputStream originalIn = System.in;
             getS3File(questionId, "input");
             getS3File(questionId, "answer");
-            System.setIn(new FileInputStream("src/main/resources/answer/input.txt"));
+            System.setIn(new FileInputStream("/tmp/input.txt"));
             try {
                 mainMethod.invoke(null, (Object) new String[]{});
             } catch (Exception e) {
@@ -107,11 +107,11 @@ public class JavaCompilerService implements CompilerService{
             classLoader.close();
             System.setIn(originalIn);
             System.setOut(originalOut);
-            FileOutputStream resultFile = new FileOutputStream("src/main/resources/answer/output.txt");
+            FileOutputStream resultFile = new FileOutputStream("/tmp/output.txt");
             resultFile.write(outputStream.toByteArray());
             resultFile.close();
             outputStream.reset();
-            if(compareFiles("src/main/resources/answer/output.txt", "src/main/resources/answer/answer.txt")) {
+            if(compareFiles("/tmp/output.txt", "/tmp/answer.txt")) {
                 return "정답입니다.";
             } else {
                 return "틀렸습니다.";
@@ -130,7 +130,7 @@ public class JavaCompilerService implements CompilerService{
     @Override
     public void getS3File(String questionId, String type) throws IOException {
         GetObjectRequest getObjectRequest = new GetObjectRequest(bucket, "admin/" + questionId + "/" + type + ".txt");
-        File file = new File("src/main/resources/answer/" + type + ".txt");
+        File file = new File("/tmp/" + type + ".txt");
         amazonS3.getObject(getObjectRequest, file);
     }
 

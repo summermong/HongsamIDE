@@ -11,7 +11,7 @@ public class JavaFileIOService implements FileIOService{
 
     @Override
     public File saveFile(String newCode, String title) throws IOException {
-        File javaFile = new File("src/main/resources/question/" + title + ".java");
+        File javaFile = new File("/tmp/" + title + ".java");
         FileWriter writer = new FileWriter(javaFile);
         writer.write(newCode);
         writer.close();
@@ -20,7 +20,7 @@ public class JavaFileIOService implements FileIOService{
 
     @Override
     public String findFileByName(String title) throws IOException {
-        File javaFile = new File("src/main/resources/question/" + title + ".java");
+        File javaFile = new File("/tmp/" + title + ".java");
         BufferedReader br = new BufferedReader(new FileReader(javaFile));
         StringBuilder sb = new StringBuilder();
         String line;
