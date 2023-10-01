@@ -1,6 +1,6 @@
 /** @format */
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 export default function QuestionBar({ leftWidth, handleMouseDown }) {
   return (
@@ -14,17 +14,6 @@ export default function QuestionBar({ leftWidth, handleMouseDown }) {
       }}
       className='border overflow-y-scroll relative'
     >
-      {/* <div
-        style={{
-          position: 'absolute',
-          top: 0,
-          right: 0,
-          width: '10px',
-          height: '100%',
-          backgroundColor: 'gray',
-          cursor: 'col-resize',
-        }}
-      ></div> */}
       <div
         className='absolute right-0 h-full bg-slate-100 w-2 cursor-col-resize'
         onMouseDown={handleMouseDown}

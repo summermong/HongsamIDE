@@ -36,8 +36,6 @@ export default function JavaCodeEditor({ leftWidth }) {
   const handleMouseDown = (e) => {
     e.preventDefault();
     setIsResizing(true);
-    console.log(isResizing);
-    console.log('MouseDown');
   };
 
   const [topHeigth, setTopGeigth] = useState(80); // 초기 왼쪽 너비 설정
@@ -50,15 +48,12 @@ export default function JavaCodeEditor({ leftWidth }) {
       const newTopHeigth = (e.clientY / totalHeigth) * 100;
       const newBottomHeigth = 100 - newTopHeigth;
       setTopGeigth(newTopHeigth);
-      console.log('Resizing');
-      // 오른쪽 div 너비도 설정할 수 있음: setRightWidth(newRightWidth);
     };
 
     const handleMouseUp = () => {
       setIsResizing(false);
       window.removeEventListener('mousemove', handleResize);
       window.removeEventListener('mouseup', handleMouseUp);
-      console.log('MouseUp');
     };
 
     if (isResizing) {
@@ -75,8 +70,6 @@ export default function JavaCodeEditor({ leftWidth }) {
   useEffect(() => {
     if (!monaco) return;
 
-    console.log('monaco instance:', monaco);
-
     monaco.editor.defineTheme('solarizedLigth', SolarizedLigthTheme);
 
     monaco.editor.setTheme('solarizedLigth');
@@ -84,16 +77,13 @@ export default function JavaCodeEditor({ leftWidth }) {
   const showValue = async () => {
     const code = editorRef.current.getValue();
     alert(editorRef.current.getValue());
-    console.log(JSON.stringify(editorRef.current.getValue()));
-    console.log(code);
+
     const formData = new FormData();
     formData.append('requestCode', code);
-    console.log(formData);
 
     await axios
       .post('http://localhost:8080/q1', formData, { withCredentials: true })
       .then((res) => {
-        console.log(res.data);
         setResult(res.data);
       })
       .catch((err) => {
@@ -105,17 +95,18 @@ export default function JavaCodeEditor({ leftWidth }) {
     await axios
       .get('http://localhost:8080/q1', { withCredentials: true })
       .then((res) => {
-        console.log(res.data);
-        setCode(res.data);
+        if (res.data === '') {
+          setCode(javaDefaultValue);
+        } else {
+          setCode(res.data);
+        }
       })
       .catch((err) => {
         console.log(err);
       });
   };
   const handleEditorChange = (value, event) => {
-    console.log('here is the current model value:', value);
     setCode(value);
-    console.log('code : ', code);
   };
   useEffect(() => {
     fetchCode();

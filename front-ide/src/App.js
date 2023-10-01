@@ -14,17 +14,14 @@ function App() {
       if (!isResizing) return;
       const totalWidth = window.innerWidth;
       const newLeftWidth = (e.clientX / totalWidth) * 100;
-      const newRightWidth = 100 - newLeftWidth;
+      // const newRightWidth = 100 - newLeftWidth; 필요 시에 사용할 오른쪽 넓이
       setLeftWidth(newLeftWidth);
-      console.log('Resizing');
-      // 오른쪽 div 너비도 설정할 수 있음: setRightWidth(newRightWidth);
     };
 
     const handleMouseUp = () => {
       setIsResizing(false);
       window.removeEventListener('mousemove', handleResize);
       window.removeEventListener('mouseup', handleMouseUp);
-      console.log('MouseUp');
     };
 
     if (isResizing) {
@@ -41,8 +38,6 @@ function App() {
   const handleMouseDown = (e) => {
     e.preventDefault();
     setIsResizing(true);
-    console.log(isResizing);
-    console.log('MouseDown');
   };
   return (
     <div className='flex w-full h-full'>
