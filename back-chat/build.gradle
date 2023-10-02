@@ -35,6 +35,11 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-websocket'
 	implementation 'org.webjars:sockjs-client:1.1.2'
 	implementation 'org.webjars:stomp-websocket:2.3.3-1'
+
+	//redis (테스트용 embedded redis)
+	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+	implementation group: 'it.ozimov', name: 'embedded-redis', version: '0.7.2'
+
 }
 
 tasks.named('test') {
