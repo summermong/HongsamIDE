@@ -21,5 +21,9 @@ public class ChatMessage {
     private String sender;
 
     private String message;
+
+    private String date;
+
+    private String time;
 }
 

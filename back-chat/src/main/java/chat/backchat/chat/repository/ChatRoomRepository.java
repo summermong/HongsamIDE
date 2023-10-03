@@ -3,6 +3,7 @@ package chat.backchat.chat.repository;
 import chat.backchat.chat.Domain.ChatRoom;
 import chat.backchat.chat.pubsub.RedisSubscriber;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.listener.ChannelTopic;
@@ -16,6 +17,7 @@ import java.util.Map;
 
 @RequiredArgsConstructor
 @Repository
+@Slf4j
 public class ChatRoomRepository {
     // 채팅방(topic)에 발행되는 메시지를 처리할 Listner
     private final RedisMessageListenerContainer redisMessageListener;
@@ -67,5 +69,14 @@ public class ChatRoomRepository {
 
     public ChannelTopic getTopic(String roomId) {
         return topics.get(roomId);
+    }
+
+    // 테스트
+    public void redisTest() {
+        Map<String, ChatRoom> roomsMap = opsHashChatRoom.entries("CHAT_ROOM");
+        roomsMap.forEach((key, value) -> {
+            System.out.println("Key: " + key);
+            System.out.println("Value: " + value.toString());
+        });
     }
 }

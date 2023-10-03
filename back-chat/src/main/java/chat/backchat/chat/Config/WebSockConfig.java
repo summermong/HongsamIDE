@@ -18,8 +18,8 @@ public class WebSockConfig implements WebSocketMessageBrokerConfigurer {
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         log.info("socket 연결");
         registry.addEndpoint("/ws/chat")
-                .setAllowedOrigins("*");
-//                .withSockJS(); (클라이언트에서 socketjs 안쓰면 에러나서 임시로 막아둠)
+                .setAllowedOrigins("https://main.hong-sam.online")
+                .withSockJS(); // (클라이언트에서 socketjs 안쓰면 에러나서 임시로 막아둠)
     }
 
     @Override

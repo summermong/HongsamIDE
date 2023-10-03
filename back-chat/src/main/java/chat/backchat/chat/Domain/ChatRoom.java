@@ -3,11 +3,12 @@ package chat.backchat.chat.Domain;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.io.Serializable;
 import java.util.UUID;
 
-@Getter @Setter
+@Getter @Setter @ToString
 @NoArgsConstructor
 public class ChatRoom implements Serializable {
 

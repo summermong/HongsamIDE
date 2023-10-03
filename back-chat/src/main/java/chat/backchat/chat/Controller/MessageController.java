@@ -6,6 +6,7 @@ import chat.backchat.chat.repository.ChatRoomRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessageSendingOperations;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -26,6 +27,11 @@ public class MessageController {
         }
         // Websocket에 발행된 메시지를 redis로 발행한다(publish)
         redisPublisher.publish(chatRoomRepository.getTopic(message.getRoomId()), message);
+    }
+
+    @GetMapping("/redis")
+    public void redisTest() {
+        chatRoomRepository.redisTest();
     }
 
 
