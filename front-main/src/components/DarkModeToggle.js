@@ -30,13 +30,7 @@ const DarkModeToggle = ({ isDarkMode, setIsDarkMode }) => {
         }
         onClick={toggleButton}
       >
-        <div
-          className={
-            isToggled
-              ? `${styles.toggleSwitch} ${styles.moveRight}`
-              : styles.toggleSwitch
-          }
-        ></div>
+        {isToggled ? '🌙' : '☀️'}
       </button>
     </div>
   );
