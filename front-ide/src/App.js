@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react';
 function App() {
   const [leftWidth, setLeftWidth] = useState(30); // 초기 왼쪽 너비 설정
   const [isResizing, setIsResizing] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(false);
 
   useEffect(() => {
     const handleResize = (e) => {
@@ -40,9 +41,17 @@ function App() {
     setIsResizing(true);
   };
   return (
-    <div className='flex w-full h-full'>
+    <div
+      className={`flex w-full h-full ${
+        isDarkMode ? 'bg-zinc-800 text-white' : ''
+      } transition`}
+    >
       <QuestionBar leftWidth={leftWidth} handleMouseDown={handleMouseDown} />
-      <JavaCodeEditor leftWidth={leftWidth} />
+      <JavaCodeEditor
+        leftWidth={leftWidth}
+        isDarkMode={isDarkMode}
+        setIsDarkMode={setIsDarkMode}
+      />
     </div>
   );
 }

@@ -7,16 +7,16 @@ import TermTopBar from './TermTopBar';
 export default function ResultTerm({ result, topHeigth, handleMouseDown }) {
   return (
     <div
-      className='overflow-y-scroll'
+      className='overflow-y-scroll border-t'
       style={{ height: `100 - ${topHeigth}%` }}
     >
       <div
-        className='w-full bg-slate-100 h-2 cursor-row-resize'
+        className='w-full h-1 cursor-row-resize '
         onMouseDown={handleMouseDown}
       ></div>
       <TermTopBar />
       <div className={``}>
-        <p className='pl-2'>{result}</p>
+        <p className='pl-5'>{result}</p>
       </div>
     </div>
   );
