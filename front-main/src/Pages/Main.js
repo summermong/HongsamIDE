@@ -3,16 +3,11 @@ import Styles from './Main.module.css';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../api/AuthContext';
 
-const Main = ({ isDarkMode }) => {
+const Main = () => {
   const navigate = useNavigate();
-  const { isLoggedIn } = useAuth();
 
   const handleCheck = () => {
-    if (isLoggedIn) {
-      navigate('/question');
-    } else {
-      navigate('/login');
-    }
+    navigate('/questions');
   };
 
   return (
