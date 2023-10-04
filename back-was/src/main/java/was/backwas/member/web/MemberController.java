@@ -57,9 +57,11 @@ public class MemberController {
         HttpSession session = request.getSession(false);
 
         if (session == null || session.getAttribute("loginMember") == null) {
+            log.info("로그아웃 실패");
             return new MemberResponse(400,"로그아웃 실패");
         }
         session.invalidate();
+        log.info("로그아웃 성공");
         return new MemberResponse(200,"로그아웃 성공");
     }
 }

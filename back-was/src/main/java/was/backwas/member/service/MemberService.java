@@ -1,6 +1,7 @@
 package was.backwas.member.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import was.backwas.member.domain.LoginDto;
@@ -15,6 +16,7 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 @Transactional
+@Slf4j
 public class MemberService {
 
     private final MemberRepository memberRepository;
@@ -65,4 +67,12 @@ public class MemberService {
     }
 
 
+    public MemberResponse getUUID(String email) {
+
+        String uuid = memberRepository.findPasswordByEmail(email).getUuid();
+        log.info("uuid = {}", uuid);
+
+        return new MemberResponse(200, uuid);
+
+    }
 }
