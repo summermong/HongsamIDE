@@ -1,0 +1,47 @@
+.header {
+  height: 50px;
+  width: 100%;
+  border-bottom: 1px solid var(--main-color);
+  display: flex;
+  align-items: center;
+}
+
+.title {
+  align-items: center;
+  font-size: 24px;
+  color: var(--main-color);
+  padding: 20px;
+}
+
+.username {
+  padding: 20px;
+  position: relative;
+  box-sizing: border-box;
+  border: none;
+  background-color: transparent;
+  color: var(--main-color);
+  cursor: pointer;
+}
+
+.dropdown {
+  position: absolute; /* absolute 대신 relative로 변경합니다. */
+  background-color: white;
+  width: 100px;
+  top: 80%; /* top을 100%로 설정하여 userName 아래로 이동합니다. */
+  left: 50%; /* 가운데로 이동합니다. */
+  transform: translateX(-50%); /* 가운데 정렬을 위한 추가 스타일 */
+  text-align: center;
+}
+
+.dropdown li {
+  padding: 10px;
+  font-size: 12px;
+  border-bottom: 1px solid var(--lightGray-color);
+  color: black;
+  transition: background-color 0.3s; /* 호버 시 변화를 부드럽게 만듭니다. */
+}
+
+.dropdown li:hover {
+  background-color: var(--main-color);
+  color: black; /* 텍스트 색상 변경 (선택사항) */
+}
