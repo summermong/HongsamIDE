@@ -111,6 +111,12 @@ public class JavaCompilerService implements CompilerService{
             resultFile.write(outputStream.toByteArray());
             resultFile.close();
             outputStream.reset();
+
+            File classFile = new File("/tmp", questionId + ".class");
+            if (classFile.exists()) {
+                classFile.delete();
+            }
+
             if(compareFiles("/tmp/output.txt", "/tmp/answer.txt")) {
                 return "정답입니다.";
             } else {
@@ -140,11 +146,21 @@ public class JavaCompilerService implements CompilerService{
             BufferedReader outBr = new BufferedReader(new FileReader(outputPath));
             BufferedReader ansBr = new BufferedReader(new FileReader(answerPath));
 
-            String outLine, ansLine;
-            while((outLine = outBr.readLine()) != null && (ansLine = ansBr.readLine()) != null) {
+            String outLine = outBr.readLine();
+            String ansLine = ansBr.readLine();
+
+            if (outLine == null) {
+                return false;
+            }
+            /**
+             * 문제 : 정답 이후 틀린파일 제출하면 이전에 정상처리 .class 파일이 실행되니까, 이거 없애주는 부분 추가!
+             */
+            while(outLine != null && ansLine != null) {
                 if (!outLine.equals(ansLine)) {
                     return false;
                 }
+                outLine = outBr.readLine();
+                ansLine = ansBr.readLine();
             }
             return true;
         } catch (IOException e) {
