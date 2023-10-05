@@ -30,7 +30,7 @@ const Login = () => {
       .then((response) => {
         if (response.data.status === 200) {
           login(response.data.data);
-          navigate('/questions');
+          navigate('/question');
         } else if (response.data.status === 400) {
           alert('아이디 또는 비밀번호가 맞지 않습니다.');
         }
