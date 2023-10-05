@@ -17,7 +17,7 @@ public class MemberController {
 
     private final MemberService memberService;
 
-    // 회원가입
+  // 회원가입
     @PostMapping("/signup")
     public MemberResponse signup(@RequestBody Member member) {
         return memberService.signup(member);
