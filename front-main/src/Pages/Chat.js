@@ -3,11 +3,13 @@ import SockJS from 'sockjs-client';
 import { Client } from '@stomp/stompjs';
 import styles from './Chat.module.css';
 
-function Chat({ uuid, roomId }) {
+function Chat() {
   const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState('');
   const [stompClient, setStompClient] = useState(null);
   const [name, setName] = useState(''); // 이름 상태 추가
+
+  const roomId = '9c79c435-3364-4d69-ae2a-99979bcede61';
 
   const scrollContainerRef = useRef(null); // useRef 초기화
 
@@ -31,7 +33,6 @@ function Chat({ uuid, roomId }) {
           message: message,
           date: new Date().toLocaleDateString(),
           time: new Date().toLocaleTimeString(),
-          uuid: `${uuid}`,
         }),
       });
       setMessage('');
@@ -56,7 +57,6 @@ function Chat({ uuid, roomId }) {
           roomId: `${roomId}`,
           sender: `${enteredName}`,
           message: null, // 이름에 따라 다른 입장 메시지
-          uuid: `${uuid}`,
         }),
       });
       setStompClient(stompClient);
