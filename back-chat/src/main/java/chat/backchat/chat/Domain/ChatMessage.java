@@ -25,5 +25,7 @@ public class ChatMessage {
     private String date;
 
     private String time;
+
+    private String uuid;
 }
 
