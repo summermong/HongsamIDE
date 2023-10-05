@@ -3,12 +3,13 @@ package chat.backchat.chat.Controller;
 import chat.backchat.chat.Domain.ChatResponse;
 import chat.backchat.chat.repository.ChatRoomRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-@Controller
+@RestController
 @RequiredArgsConstructor
-@RequestMapping("/chat")
+@Slf4j
 public class ChatController {
 
     private final ChatRoomRepository chatRoomRepository;
@@ -21,10 +22,11 @@ public class ChatController {
 //    }
 
     // 실제 코드 편집기에서 보낼 때 채팅방 생성
-    @PostMapping("/chat/{uuid}/{questionId}")
-    public ChatResponse createChatRoom(@PathVariable String uuid, @PathVariable String questionId) {
-        return chatRoomRepository.findRoomId(uuid, questionId);
-    }
+//    @GetMapping("/chat/{uuid}/{questionId}")
+//    public ChatResponse createChatRoom(@PathVariable String uuid, @PathVariable String questionId) {
+//        log.info("step1 들어옴");
+//        return chatRoomRepository.findRoomId(uuid, questionId);
+//    }
 
 }
 
