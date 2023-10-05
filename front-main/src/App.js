@@ -5,10 +5,10 @@ import Main from './Pages/Main';
 import Login from './Pages/Login';
 import Signup from './Pages/Signup';
 import Question from './Pages/Question';
-import Chat from './Chat/Chat';
 import { AuthProvider } from './api/AuthContext';
 import DarkModeToggle from './Components/DarkModeToggle';
-import WebSocketJS from './Pages/WebSocketJS';
+import Chat from './Pages/Chat';
+import Mypage from './Pages/Mypage';
 
 function App() {
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -44,7 +44,7 @@ function App() {
             <Route path="/signup" element={<Signup />} />
             <Route path="/question" element={<Question />} />
             <Route path="/chat" element={<Chat />} />
-            <Route path="/websocketjs" element={<WebSocketJS />} />
+            <Route path="/mypage" element={<Mypage />} />
           </Routes>
         </AuthProvider>
       </div>
