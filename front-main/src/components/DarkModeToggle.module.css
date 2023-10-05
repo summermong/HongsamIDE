@@ -8,7 +8,6 @@
 }
 
 .toggleBtn {
-  position: fixed;
   top: 1px; /* 원하는 상단 위치 */
   right: 5px;
   border: none;
@@ -21,7 +20,7 @@
   box-shadow: 0 0 16px 3px rgba(0 0 0 / 15%);
   cursor: pointer;
   margin-top: 10px;
-  font-size: 18px;
+  font-size: 20px;
 }
 
 .toggleBtn_dark {
