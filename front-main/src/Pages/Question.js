@@ -1,60 +1,22 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import styles from './Question.module.css';
 import Nav from '../Components/Nav';
 import axios from 'axios';
 import { useAuth } from '../api/AuthContext';
 import Chat from './Chat';
+import QuestionContainer from '../Components/QuestionContainer';
 
 const Question = () => {
-  const questsPerPage = 10;
-  const [currentPage, setCurrentPage] = useState(1);
+  /* 로그인 & 유저 정보 전역관리 */
+  const { isLoggedIn } = useAuth();
 
-  const quests = [
-    { questionId: '1', status: '미해결', title: '토끼', level: 1 },
-    { questionId: '2', status: '미해결', title: '거북이', level: 2 },
-    { questionId: '3', status: '미해결', title: '회의실 배정', level: 3 },
-    { questionId: '4', status: '미해결', title: '회의실 배정', level: 1 },
-    { questionId: '5', status: '미해결', title: '회의실 배정', level: 2 },
-    { questionId: '6', status: '미해결', title: '엉금엉금', level: 3 },
-    { questionId: '7', status: '미해결', title: '앙금앙금', level: 1 },
-    { questionId: '8', status: '미해결', title: '앙금앙금', level: 1 },
-    { questionId: '9', status: '미해결', title: '앙금앙금', level: 1 },
-    { questionId: '10', status: '미해결', title: '앙금앙금', level: 1 },
-    { questionId: '11', status: '미해결', title: '앙금앙금', level: 1 },
-  ];
-
-  const indexOfLastQuest = currentPage * questsPerPage;
-  const indexOfFirstQuest = indexOfLastQuest - questsPerPage;
-  const currentQuest = quests.slice(indexOfFirstQuest, indexOfLastQuest);
-
-  const handlePageChange = (pageNumber) => {
-    setCurrentPage(pageNumber);
-  };
-
-  const totalQuests = quests.length;
-  const canGoToNextPage = indexOfLastQuest < totalQuests;
-
-  const { isLoggedIn, login } = useAuth();
+  /* IDE로 라우팅 내비게이터 */
   const navigate = useNavigate();
 
-  useEffect(() => {
-    // 세션 체크를 위한 GET 요청
-    axios
-      .get('https://api.hong-sam.online/', {
-        withCredentials: true,
-      })
-      .then((response) => {
-        if (response.data.status === 200) {
-          login(response.data.data);
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
-
+  /* IDE로 이동하는 함수 */
   const goToEditor = (questionId) => {
+    /* 로그인 시 uuid와 questionId를 가지고 이동 */
     if (isLoggedIn) {
       axios
         .get(`https://api.hong-sam.online/question/${questionId}`, {
@@ -69,12 +31,14 @@ const Question = () => {
         .catch((error) => {
           console.log(error);
         });
+      /* 미로그인 시 로그인 페이지로 이동 */
     } else {
       alert('로그인을 해주세요.');
       navigate('/login');
     }
   };
 
+  /* 채팅 부분 TEST CODE */
   const [uuid, setUuid] = useState('1234');
   const [roomId, setRoomId] = useState(null);
 
@@ -94,15 +58,81 @@ const Question = () => {
       });
   };
 
+  /* 레벨 선택 상태 */
+  const [selectedLevel, setSelectedLevel] = useState('all');
+
+  /* 레벨 선택 이벤트 핸들러 */
+  const handleLevelChange = (event) => {
+    setSelectedLevel(event.target.value);
+  };
+
+  /* 레벨 선택 옵션 */
+  const levelOptions = ['all', 'Lv.0', 'Lv.1', 'Lv.2'];
+
+  const [questionData, setQuestionData] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get('https://api.hong-sam.online/question')
+      .then((response) => {
+        setQuestionData(response.data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
+
+  /* 레벨에 따라 필터된 문제 배열 생성 */
+  const filteredQuests =
+    selectedLevel === 'all'
+      ? questionData
+      : questionData.filter(
+          (question) =>
+            parseInt(question.level) === parseInt(selectedLevel.slice(3))
+        );
+
+  /* 페이지 당 문제 개수 */
+  const questsPerPage = 10;
+
+  /* 현재 페이지의 기본값 */
+  const [currentPage, setCurrentPage] = useState(1);
+
+  /* 페이지의 마지막 문제 인덱스 */
+  const indexOfLastQuest = currentPage * questsPerPage;
+
+  /* 페이지의 첫 번째 문제 인덱스 */
+  const indexOfFirstQuest = indexOfLastQuest - questsPerPage;
+
+  /* 한 페이지 당 들어갈 문제의 개수 */
+  const currentQuest = filteredQuests.slice(
+    indexOfFirstQuest,
+    indexOfLastQuest
+  );
+
+  /* 현재 페이지 상태 변경 */
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+
+  /* 페이지의 마지막 문제 인덱스가 전체 문제 개수보다 작을 경우 다음 페이지로 이동 가능 */
+  const totalQuests = questionData.length;
+  const canGoToNextPage = indexOfLastQuest < totalQuests;
+
   return (
     <div>
       <Nav />
       <div className={styles.Question}>
         <div className={styles.findingQuestion}>
-          <select className={styles.selectingLevel}>
-            <option>Lv.0</option>
-            <option>Lv.1</option>
-            <option>Lv.2</option>
+          <select
+            className={styles.selectingLevel}
+            onChange={handleLevelChange}
+            value={selectedLevel}
+          >
+            {levelOptions.map((option, index) => (
+              <option key={index} value={option}>
+                {option === 'all' ? '전체' : `${option}`}
+              </option>
+            ))}
           </select>
           <input
             className={styles.searchingTitle}
@@ -110,34 +140,11 @@ const Question = () => {
           />
           <button className={styles.searchingBtn}>검색</button>
         </div>
-        <div className={styles.tableContainer}>
-          <table className={styles.table}>
-            <thead>
-              <tr>
-                <th>문제 번호</th>
-                <th>상태</th>
-                <th>레벨</th>
-                <th>제목</th>
-              </tr>
-            </thead>
-            <tbody className={styles.tbody}>
-              {currentQuest.map((question, index) => (
-                <tr key={index}>
-                  <td>{question.questionId}</td>
-                  <td>{question.status}</td>
-                  <td>{question.level}</td>
-                  <td
-                    className={styles.selectingQuestion}
-                    onClick={() => goToEditor(question.questionId)}
-                  >
-                    {question.title}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-        <div className={styles.pageButtons}>
+        <QuestionContainer
+          currentQuest={currentQuest}
+          goToEditor={goToEditor}
+        />
+        <div className={styles.pageBtns}>
           <button
             onClick={() => handlePageChange(currentPage - 1)}
             disabled={currentPage === 1}
