@@ -2,15 +2,15 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './Nav.module.css';
 import { useAuth } from '../api/AuthContext';
+import axios from 'axios';
 
 const Nav = () => {
   const navigate = useNavigate();
-  const { isLoggedIn, userData, logout } = useAuth();
+  const { isLoggedIn, userData, login, logout } = useAuth();
   const dropdownRef = useRef(null);
-
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
-  const userName = isLoggedIn ? `${userData.name} 님` : '로그인';
+  const userName = isLoggedIn ? `${userData.username} 님` : '로그인';
 
   const toggleDropdown = () => {
     setIsDropdownOpen((prevIsDropdownOpen) => !prevIsDropdownOpen);
@@ -24,18 +24,41 @@ const Nav = () => {
     navigate('/login');
   };
 
+  const goToLogout = () => {
+    axios
+      .post(
+        'https://api.hong-sam.online/members/logout',
+        {},
+        {
+          withCredentials: true,
+        }
+      )
+      .then((response) => {
+        if (response.data.status === 200) {
+          logout();
+          alert('로그아웃 되었습니다.');
+          navigate('/');
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setIsDropdownOpen(false);
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
+    // 세션 체크를 위한 GET 요청
+    axios
+      .get('https://api.hong-sam.online/', {
+        withCredentials: true,
+      })
+      .then((response) => {
+        if (response.data.status === 200) {
+          login(response.data.data);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }, []);
 
   return (
@@ -51,7 +74,7 @@ const Nav = () => {
             <div className={styles.dropdown} ref={dropdownRef}>
               <ul>
                 <li onClick={goToMypage}>My Page</li>
-                <li onClick={logout}>로그아웃</li>
+                <li onClick={goToLogout}>로그아웃</li>
               </ul>
             </div>
           )}
