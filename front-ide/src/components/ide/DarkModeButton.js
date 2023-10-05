@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import styles from './DarkModeButton.module.css';
 
-const DarkModeToggle = ({ isDarkMode, setIsDarkMode }) => {
+const DarkModeButton = ({ isDarkMode, setIsDarkMode }) => {
   const [isToggled, setIsToggled] = useState(false);
 
   const toggleButton = () => {
@@ -13,7 +13,7 @@ const DarkModeToggle = ({ isDarkMode, setIsDarkMode }) => {
   };
 
   return (
-    <div className={styles.DarkModeToggle}>
+    <div className={styles.DarkModeButton}>
       <button
         className={
           isToggled
@@ -28,4 +28,4 @@ const DarkModeToggle = ({ isDarkMode, setIsDarkMode }) => {
   );
 };
 
-export default DarkModeToggle;
+export default DarkModeButton;

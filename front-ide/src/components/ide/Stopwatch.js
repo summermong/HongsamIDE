@@ -41,12 +41,11 @@ const Stopwatch = () => {
   };
 
   return (
-    <div className='flex gap-3'>
+    <div className='flex gap-2'>
       <div className=''>{formatTime(elapsedTime)}</div>
-      <div className='flex gap-3'>
-        <button onClick={startStop}>{isRunning ? 'Stop' : 'Start'}</button>
-        <button onClick={reset}>Reset</button>
-      </div>
+
+      <button onClick={startStop}>{isRunning ? 'Stop' : 'Start'}</button>
+      <button onClick={reset}>Reset</button>
     </div>
   );
 };
