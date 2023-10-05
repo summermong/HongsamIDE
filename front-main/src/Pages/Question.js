@@ -4,11 +4,11 @@ import styles from './Question.module.css';
 import Nav from '../Components/Nav';
 import axios from 'axios';
 import { useAuth } from '../api/AuthContext';
-import Chat from './Chat'; // Import the Chat component
+import Chat from './Chat';
 
 const Question = () => {
-  const questsPerPage = 10; // 한 페이지당 보여줄 문제 수
-  const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 번호
+  const questsPerPage = 10;
+  const [currentPage, setCurrentPage] = useState(1);
 
   const quests = [
     { questionId: '1', status: '미해결', title: '토끼', level: 1 },
@@ -75,8 +75,8 @@ const Question = () => {
     }
   };
 
-  const [uuid, setUuid] = useState('1234'); // Initialize uuid state
-  const [roomId, setRoomId] = useState(null); // Initialize roomId state
+  const [uuid, setUuid] = useState('1234');
+  const [roomId, setRoomId] = useState(null);
 
   const setUuidAndRoomId = (uuid, newRoomId) => {
     setUuid(uuid);
