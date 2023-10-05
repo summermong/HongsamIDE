@@ -1,13 +1,12 @@
 import React from 'react';
 import Styles from './Main.module.css';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../api/AuthContext';
 
 const Main = () => {
   const navigate = useNavigate();
 
   const handleCheck = () => {
-    navigate('/questions');
+    navigate('/question');
   };
 
   return (
