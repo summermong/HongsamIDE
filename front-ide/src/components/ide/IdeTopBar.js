@@ -1,7 +1,7 @@
 /** @format */
 
 import React from 'react';
-import Play from '../../icon/Play';
+import styles from './IdeTopBar.module.css';
 import Stopwatch from './Stopwatch';
 import ToggleButton from './ToggleButton';
 import DarkModeButton from './DarkModeButton';
@@ -10,10 +10,9 @@ export default function IdeTopBar({ showValue, isDarkMode, setIsDarkMode }) {
   const openChat = () => {};
   return (
     <div
-      className={`flex items-center fixed w-screen z-10 border-b`}
-      style={{ borderColor: 'var(--main-color)' }}
+      className={`${styles.IdeTopBarContainer} flex items-center fixed w-screen z-10 border-b`}
     >
-      <p style={{ color: 'var(--main-color)' }} className='text-2xl pl-5 p-2'>
+      <p className={`${styles.IdeTopBarHeader} text-2xl pl-5 p-2`}>
         Hongsam IDE
       </p>
       <div className='grow'></div>
@@ -22,10 +21,7 @@ export default function IdeTopBar({ showValue, isDarkMode, setIsDarkMode }) {
         <DarkModeButton isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode} />
         <Stopwatch />
         <button onClick={openChat}>Chat</button>
-        <button onClick={showValue}>
-          Run
-          {/* <Play color={'var(--main-color)'} /> */}
-        </button>
+        <button onClick={showValue}>Run</button>
       </div>
     </div>
   );

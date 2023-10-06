@@ -1,0 +1,8 @@
+/** @format */
+
+.IdeTopBarContainer {
+  border-color: var(--main-color);
+}
+.IdeTopBarHeader {
+  color: var(--main-color);
+}

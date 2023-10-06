@@ -1,37 +1,27 @@
 /** @format */
 
 import React from 'react';
+import styles from './QuestionBar.module.css';
 
 export default function QuestionBar({ leftWidth, handleMouseDown }) {
   return (
     <div
       style={{
         width: `${leftWidth}%`,
-        flexShrink: 0,
-        userSelect: 'none',
-        marginTop: '49px',
-        height: 'calc(100vh - 49px)',
-        borderColor: 'var(--main-color)',
       }}
-      className='overflow-y-scroll relative border-r'
+      className={`${styles.questionBarContainer} overflow-y-scroll relative border-r`}
     >
       <div
         className='absolute right-0 h-full w-1 cursor-col-resize'
         onMouseDown={handleMouseDown}
       ></div>
       <div>
-        <h1
-          className='text-3xl p-5 border-b'
-          style={{ borderColor: 'var(--main-color)' }}
-        >
+        <h1 className={`${styles.questionItem} text-3xl p-5 border-b`}>
           넷이 놀기
         </h1>
       </div>
-      <div>
-        <p
-          className='p-5 border-b'
-          style={{ borderColor: 'var(--main-color)' }}
-        >
+      <div className={`${styles.questionItem} p-5 border-b`}>
+        <p>
           네 사람이서 2차원 평면상의 N개의 점을 이용해서 할 수 있는 놀이가 있다.
           <br />
           바로 각 사람이 1개씩의 점을 적절히 선택해서 변이 x축 혹은 y축에 평행한
@@ -46,17 +36,11 @@ export default function QuestionBar({ leftWidth, handleMouseDown }) {
           구해보자.
         </p>
       </div>
-      <div
-        className='p-5 border-b'
-        style={{ borderColor: 'var(--main-color)' }}
-      >
+      <div className={`${styles.questionItem} p-5 border-b`}>
         <p className='text-lg'>입력</p>
         <p>입력 예시</p>
       </div>
-      <div
-        className='p-5 border-b'
-        style={{ borderColor: 'var(--main-color)' }}
-      >
+      <div className={`${styles.questionItem} p-5 border-b`}>
         <p className='text-lg'>출력</p>
         <p>출력 예시</p>
       </div>

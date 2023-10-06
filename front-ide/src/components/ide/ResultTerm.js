@@ -1,13 +1,14 @@
 /** @format */
 
 import React, { useEffect, useState } from 'react';
-import ChevronDown from '../../icon/ChevronDown';
+import styles from './ResultTerm.module.css';
+
 import TermTopBar from './TermTopBar';
 
 export default function ResultTerm({ result, topHeigth, handleMouseDown }) {
   return (
     <div
-      className='overflow-y-scroll border-t'
+      className={`${styles.resultTermContainer} overflow-y-scroll border-t`}
       style={{
         height: `100 - ${topHeigth}%`,
         borderColor: 'var(--main-color)',

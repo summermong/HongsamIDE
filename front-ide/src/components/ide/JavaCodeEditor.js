@@ -7,6 +7,7 @@ import TomorrowDarkTheme from 'monaco-themes/themes/Tomorrow-Night.json';
 import { javaDefaultValue } from '../../defaultValues';
 import axios from 'axios';
 
+import styles from './JavaCodeEditor.module.css';
 import ResultTerm from './ResultTerm';
 import IdeTopBar from './IdeTopBar';
 
@@ -104,7 +105,7 @@ export default function JavaCodeEditor({
     await axios
       .post(
         'https://4s06mb280b.execute-api.ap-northeast-2.amazonaws.com/compile',
-        { questionId: 'q1', uuid: 0, requestCode: code, language: 'java' }
+        { questionId: 'q1', uuid: 3, requestCode: code, language: 'java' }
       )
       .then((res) => {
         setResult(res.data);
@@ -118,18 +119,17 @@ export default function JavaCodeEditor({
     await axios
       .post(
         'https://4s06mb280b.execute-api.ap-northeast-2.amazonaws.com/getcode',
-        { questionId: 'q1', uuid: 0 }
+        { questionId: 'q1', uuid: 3 }
       )
       .then((res) => {
         console.log(res.data);
-        if (res.data === '') {
-          setCode(javaDefaultValue);
-        } else {
-          setCode(res.data);
-        }
+        setCode(res.data);
       })
       .catch((err) => {
-        console.log(err);
+        console.log(err.response.status);
+        if (err.response.status === 500) {
+          setCode(javaDefaultValue);
+        }
       });
   };
   const handleEditorChange = (value, event) => {
@@ -148,10 +148,8 @@ export default function JavaCodeEditor({
       />
 
       <div
+        className={`${styles.codeEditorContainer}`}
         style={{
-          position: 'relative',
-          height: 'calc(100vh - 49px)',
-          marginTop: '49px',
           width: `${100 - leftWidth}%`, // 오른쪽 div의 너비를 설정
         }}
       >

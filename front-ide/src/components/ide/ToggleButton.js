@@ -1,23 +1,23 @@
 /** @format */
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import styles from './ToggleButton.module.css';
 
 const ToggleButton = () => {
   const [isToggled, setIsToggled] = useState(false);
 
-  const toggleBtn = () => {
+  const toggleButton = () => {
     !isToggled ? setIsToggled(true) : setIsToggled(false);
   };
   return (
-    <div className={styles.ToggleButton}>
+    <div className={styles.toggleButtonWraper}>
       <button
         className={
           isToggled
-            ? `${styles.toggleBtn} ${styles.toggleBtn_dark}`
-            : styles.toggleBtn
+            ? `${styles.toggleButton} ${styles.toggleButton_dark}`
+            : styles.toggleButton
         }
-        onClick={toggleBtn}
+        onClick={toggleButton}
       >
         <div
           className={

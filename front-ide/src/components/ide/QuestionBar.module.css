@@ -1,0 +1,13 @@
+/** @format */
+.questionBarContainer {
+  flex-shrink: 0;
+  user-select: none;
+  margin-top: 49px;
+  height: calc(100vh - 49px);
+}
+
+.questionHeader,
+.questionItem,
+questionBarContainer {
+  border-color: var(--main-color);
+}
