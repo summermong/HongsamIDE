@@ -14,10 +14,6 @@
   margin-bottom: 10px;
 }
 
-.subtitle .dark-mode {
-  color: white;
-}
-
 .title {
   display: inline;
   margin: 0 auto;
@@ -26,7 +22,7 @@
   color: var(--main-color);
 }
 
-.btn {
+.startingBtn {
   margin: 30px auto;
   width: 350px;
   border: none;
@@ -39,6 +35,6 @@
   background-color: var(--main-color);
 }
 
-.btn:hover {
+.startingBtn:hover {
   background-color: var(--mainDark-color);
 }

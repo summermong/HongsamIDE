@@ -55,13 +55,13 @@
   cursor: pointer;
 }
 
+.Mypage button:hover {
+  background-color: var(--mainDark-color);
+}
+
 .userInfo .changingNameBtn {
   width: 50px;
   height: 20px;
   padding: 3px;
   font-size: 12px;
-}
-
-.Mypage button:hover {
-  background-color: var(--mainDark-color);
 }

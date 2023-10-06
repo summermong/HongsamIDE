@@ -16,10 +16,6 @@
   margin-bottom: 10px;
 }
 
-.subtitle .dark-mode {
-  color: white;
-}
-
 .title {
   display: inline;
   margin: 0 auto;
@@ -61,7 +57,7 @@ label {
   font-weight: 300;
 }
 
-.login_btn {
+.loginBtn {
   margin: 10px auto;
   width: 100%;
   border: none;
@@ -74,7 +70,7 @@ label {
   cursor: pointer;
 }
 
-.login_btn:hover {
+.loginBtn:hover {
   background-color: var(--mainDark-color);
 }
 
