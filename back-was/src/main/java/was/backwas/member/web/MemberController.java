@@ -6,7 +6,9 @@ import org.springframework.web.bind.annotation.*;
 import was.backwas.member.domain.*;
 import was.backwas.member.service.MemberService;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 @RestController
@@ -32,7 +34,7 @@ public class MemberController {
 
     // 로그인
     @PostMapping("/login")
-    public MemberResponse login(@RequestBody LoginDto loginDto, HttpServletRequest request) {
+    public MemberResponse login(@RequestBody LoginDto loginDto, HttpServletRequest request, HttpServletResponse response) {
 
         LoginMemberResponse loginMember = memberService.login(loginDto);
 
@@ -42,8 +44,16 @@ public class MemberController {
 
         HttpSession session = request.getSession();
         session.setAttribute("loginMember", loginMember);
-        log.info("일반 유저 세션 생성");
 
+
+        Cookie cookie = new Cookie("JSESSIONID", session.getId());
+        cookie.setDomain("hong-sam.online");
+        cookie.setSecure(true);
+        cookie.setPath("/");
+        cookie.setHttpOnly(true);
+        response.addCookie(cookie);
+
+        log.info("일반 유저 세션 생성");
         log.info("sessionId={}", session.getId());
         session.getAttributeNames().asIterator()
                 .forEachRemaining(name -> log.info("session name={}, value={}", name, session.getAttribute(name)));
