@@ -3,11 +3,10 @@ import SockJS from 'sockjs-client';
 import { Client } from '@stomp/stompjs';
 import styles from './Chat.module.css';
 
-function Chat({ uuid, roomId }) {
+function Chat({ uuid, roomId, sender }) {
   const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState('');
   const [stompClient, setStompClient] = useState(null);
-  const [name, setName] = useState(''); // 이름 상태 추가
 
   const scrollContainerRef = useRef(null); // useRef 초기화
 
@@ -27,7 +26,7 @@ function Chat({ uuid, roomId }) {
         body: JSON.stringify({
           type: 'TALK',
           roomId: `${roomId}`,
-          sender: name, // 현재 설정된 이름 사용
+          sender: `${sender}`,
           message: message,
           date: new Date().toLocaleDateString(),
           time: new Date().toLocaleTimeString(),
@@ -44,17 +43,13 @@ function Chat({ uuid, roomId }) {
     const stompClient = new Client();
     stompClient.webSocketFactory = () => socket;
     stompClient.onConnect = () => {
-      // 이름 입력 받기
-      const enteredName = window.prompt('이름을 입력하세요');
-      setName(enteredName || '사용자 이름'); // 이름 설정, 입력이 없을 경우 기본값 설정
-
       // 입장 메시지 전송
       stompClient.publish({
         destination: '/pub/chat/message',
         body: JSON.stringify({
           type: 'ENTER',
           roomId: `${roomId}`,
-          sender: `${enteredName}`,
+          sender: `${sender}`,
           message: null, // 이름에 따라 다른 입장 메시지
           uuid: `${uuid}`,
         }),
@@ -88,14 +83,14 @@ function Chat({ uuid, roomId }) {
             className={
               message.type === 'ENTER'
                 ? styles.enter
-                : message.sender === name
+                : message.sender === `${sender}`
                 ? styles.send
                 : styles.receive
             }
           >
             {message.type === 'ENTER' ? (
               <div className={styles.enterMessage}>{message.message}</div>
-            ) : message.sender === name ? (
+            ) : message.sender === `${sender}` ? (
               <div className={styles.send}>
                 <div className={styles.sender}>{message.sender}</div>
                 <span className={styles.sendChat}>{message.message}</span>

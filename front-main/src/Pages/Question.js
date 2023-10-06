@@ -6,13 +6,13 @@ import axios from 'axios';
 import { useAuth } from '../api/AuthContext';
 import Chat from './Chat';
 import QuestionContainer from '../Components/QuestionContainer';
+import QuestionPageBtn from '../Components/QuestionPageBtn';
 
 const Question = () => {
-  /* 로그인 & 유저 정보 전역관리 */
-  const { isLoggedIn } = useAuth();
-
-  /* IDE로 라우팅 내비게이터 */
   const navigate = useNavigate();
+
+  const { isLoggedIn, userData } = useAuth();
+  const [sender, setSender] = useState('');
 
   /* IDE로 이동하는 함수 */
   const goToEditor = (questionId) => {
@@ -38,24 +38,21 @@ const Question = () => {
     }
   };
 
-  /* 채팅 부분 TEST CODE */
+  /* web ide에 필요 */
   const [uuid, setUuid] = useState('1234');
-  const [roomId, setRoomId] = useState(null);
-
-  const setUuidAndRoomId = (uuid, newRoomId) => {
-    setUuid(uuid);
-    setRoomId(newRoomId);
-  };
-
-  const chating = () => {
-    axios
-      .get(`https://chat.hong-sam.online/chat/${uuid}/1`)
-      .then((response) => {
-        if (response.data.status === 200) {
-          const newRoomId = response.data.data;
-          setUuidAndRoomId(uuid, newRoomId);
-        }
-      });
+  /* web ide에 필요 */
+  const [roomId, setRoomId] = useState('12341');
+  /* web ide에 필요 */
+  const [isChatOpen, setIsChatOpen] = useState(false);
+  /* web ide에 필요 */
+  const openChat = () => {
+    if (!isLoggedIn) {
+      alert('로그인 후 이용해주세요.');
+      navigate('/login');
+    } else {
+      setSender(userData.username);
+      setIsChatOpen(true);
+    }
   };
 
   /* 레벨 선택 상태 */
@@ -144,22 +141,15 @@ const Question = () => {
           currentQuest={currentQuest}
           goToEditor={goToEditor}
         />
-        <div className={styles.pageBtns}>
-          <button
-            onClick={() => handlePageChange(currentPage - 1)}
-            disabled={currentPage === 1}
-          >
-            ◀️
-          </button>
-          <button
-            onClick={() => handlePageChange(currentPage + 1)}
-            disabled={!canGoToNextPage}
-          >
-            ▶️
-          </button>
-          <button onClick={chating}>채팅</button>
-          {uuid && roomId && <Chat uuid={uuid} roomId={roomId} />}
-        </div>
+        <QuestionPageBtn
+          handlePageChange={handlePageChange}
+          currentPage={currentPage}
+          canGoToNextPage={canGoToNextPage}
+        />
+        <button onClick={openChat}>채팅</button> {/* web ide에 필요 */}
+        {uuid && roomId && isChatOpen && (
+          <Chat uuid={uuid} roomId={roomId} sender={sender} />
+        )}
       </div>
     </div>
   );
