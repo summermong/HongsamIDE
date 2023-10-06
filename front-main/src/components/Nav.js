@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './Nav.module.css';
 import { useAuth } from '../api/AuthContext';
@@ -6,7 +6,25 @@ import axios from 'axios';
 
 const Nav = () => {
   const navigate = useNavigate();
-  const { isLoggedIn, userData, login, logout } = useAuth();
+
+  const { isLoggedIn, userData, logout, login } = useAuth();
+
+  useEffect(() => {
+    // 세션 체크를 위한 GET 요청
+    axios
+      .get('https://api.hong-sam.online/', {
+        withCredentials: true,
+      })
+      .then((response) => {
+        if (response.data.status === 200) {
+          login(response.data.data);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
   const dropdownRef = useRef(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
@@ -45,26 +63,12 @@ const Nav = () => {
       });
   };
 
-  useEffect(() => {
-    // 세션 체크를 위한 GET 요청
-    axios
-      .get('https://api.hong-sam.online/', {
-        withCredentials: true,
-      })
-      .then((response) => {
-        if (response.data.status === 200) {
-          login(response.data.data);
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
-
   return (
     <div className={styles.Nav}>
       <header className={styles.header}>
-        <div className={styles.title}>Hongsam IDE</div>
+        <button className={styles.title} onClick={() => navigate('/question')}>
+          Hongsam IDE
+        </button>
         <button
           className={styles.username}
           onClick={isLoggedIn ? toggleDropdown : goToLogin}
