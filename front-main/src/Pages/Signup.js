@@ -46,17 +46,18 @@ const Signup = () => {
 
   /* 회원가입 폼 제출 함수 */
   const onSignup = ({ email, password, username }) => {
+    /* 이메일 중복 검사 완료 */
     if (isEmailUnique) {
       const Data = {
         email,
         password,
         username,
       };
-      console.log(Data);
 
       axios
         .post('https://api.hong-sam.online/members/signup', Data)
         .then((response) => {
+          /* 회원가입 완료 */
           if (response.data.status === 200) {
             alert('회원가입이 완료되었습니다.');
             navigate('/login');
@@ -65,6 +66,7 @@ const Signup = () => {
         .catch((error) => {
           console.error(error);
         });
+      /* 이메일 중복 검사 미완료 */
     } else {
       alert('이메일 중복을 확인하세요.');
     }
@@ -92,7 +94,7 @@ const Signup = () => {
             })}
           />
           <button
-            className={styles.confirmID_btn}
+            className={styles.confirmIdBtn}
             onClick={confirmID}
             type="button"
           >
@@ -160,7 +162,7 @@ const Signup = () => {
           <p>10자 이내로 입력해주세요.</p>
         )}
 
-        <button className={styles.submit_btn} type="submit">
+        <button className={styles.submitBtn} type="submit">
           Sign up
         </button>
       </form>
