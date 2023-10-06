@@ -11,6 +11,9 @@
   font-size: 24px;
   color: var(--main-color);
   padding: 20px;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
 }
 
 .username {
