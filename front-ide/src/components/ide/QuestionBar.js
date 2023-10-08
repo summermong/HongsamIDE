@@ -1,9 +1,38 @@
 /** @format */
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './QuestionBar.module.css';
+import axios from 'axios';
+import ReactMarkDown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 
 export default function QuestionBar({ leftWidth, handleMouseDown }) {
+  const [questionTitle, setQuestionTitle] = useState('');
+  const [questionContent, setQuestionContent] = useState('');
+  const [questionInput, setQuestionInput] = useState('');
+  const [questionOutput, setQuestionOutput] = useState('');
+
+  const textFileUrl =
+    'https://web-ide.s3.ap-northeast-2.amazonaws.com/admin/q1'; // 텍스트 파일의 URL을 여기에 입력
+
+  const fetchQuestion = async (subUrl, setState) => {
+    await axios
+      .get(`${textFileUrl}/${subUrl}`)
+      .then((res) => {
+        console.log(res.data);
+        setState(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  useEffect(() => {
+    fetchQuestion('content.md', setQuestionContent);
+    fetchQuestion('title.md', setQuestionTitle);
+    fetchQuestion('questionInput.md', setQuestionInput);
+    fetchQuestion('questionOutput.md', setQuestionOutput);
+  }, []);
+
   return (
     <div
       style={{
@@ -12,37 +41,32 @@ export default function QuestionBar({ leftWidth, handleMouseDown }) {
       className={`${styles.questionBarContainer} overflow-y-scroll relative border-r`}
     >
       <div
-        className='absolute right-0 h-full w-1 cursor-col-resize'
+        className='absolute right-0 h-full w-2 cursor-col-resize'
         onMouseDown={handleMouseDown}
       ></div>
       <div>
-        <h1 className={`${styles.questionItem} text-3xl p-5 border-b`}>
-          넷이 놀기
-        </h1>
+        <div className={`${styles.questionItem} text-3xl p-5 border-b`}>
+          <ReactMarkDown remarkPlugins={[remarkGfm]}>
+            {questionTitle}
+          </ReactMarkDown>
+        </div>
       </div>
       <div className={`${styles.questionItem} p-5 border-b`}>
-        <p>
-          네 사람이서 2차원 평면상의 N개의 점을 이용해서 할 수 있는 놀이가 있다.
-          <br />
-          바로 각 사람이 1개씩의 점을 적절히 선택해서 변이 x축 혹은 y축에 평행한
-          직사각형을 만드는 일이다.
-          <br />
-          물론 그냥 만들면 재미가 없기 때문에 가로의 길이가 A 세로의 길이가 B인
-          직사각형을 몇 가지나 만들 수 있는지 알아보기로 했다.
-          <br />
-          예를 들어 점이 A(0, 0), B(2, 0), C(0, 3), D(2, 3), E(4, 0), F(4, 3)의
-          6개가 있고, 만들고 싶은 직사각형이 가로가 2, 세로가 3인 직사각형이라면
-          (A, B, C, D), (B, D, E, F)의 두 가지 경우가 가능하다. 모든 경우의 수를
-          구해보자.
-        </p>
+        <ReactMarkDown remarkPlugins={[remarkGfm]}>
+          {questionContent}
+        </ReactMarkDown>
       </div>
       <div className={`${styles.questionItem} p-5 border-b`}>
         <p className='text-lg'>입력</p>
-        <p>입력 예시</p>
+        <ReactMarkDown remarkPlugins={[remarkGfm]}>
+          {questionInput}
+        </ReactMarkDown>
       </div>
       <div className={`${styles.questionItem} p-5 border-b`}>
         <p className='text-lg'>출력</p>
-        <p>출력 예시</p>
+        <ReactMarkDown remarkPlugins={[remarkGfm]}>
+          {questionOutput}
+        </ReactMarkDown>
       </div>
     </div>
   );

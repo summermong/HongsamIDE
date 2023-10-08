@@ -1,6 +1,7 @@
 /** @format */
 
-export const javaDefaultValue = `/////////////////////////////////////////////////////////////////////////////////////////////
+export const javaDefaultValue = (questionId) => {
+  return `/////////////////////////////////////////////////////////////////////////////////////////////
 // 기본 제공코드는 임의 수정해도 관계 없습니다. 단, 입출력 포맷 주의
 // 아래 표준 입출력 예제 필요시 참고하세요.
 // 표준 입력 예제
@@ -34,7 +35,7 @@ import java.io.FileInputStream;
    사용하는 클래스명이 Solution 이어야 하므로, 가급적 Solution.java 를 사용할 것을 권장합니다.
    이러한 상황에서도 동일하게 java Solution 명령으로 프로그램을 수행해볼 수 있습니다.
  */
-public class q1	//문제에 따라 변할 수 있도록 수정 필요
+public class ${questionId} 	//문제에 따라 변할 수 있도록 수정 필요
 {
 	public static void main(String args[]) throws Exception
 	{
@@ -70,3 +71,4 @@ public class q1	//문제에 따라 변할 수 있도록 수정 필요
 	}
 }
 `;
+};

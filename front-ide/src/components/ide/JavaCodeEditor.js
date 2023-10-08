@@ -10,6 +10,7 @@ import axios from 'axios';
 import styles from './JavaCodeEditor.module.css';
 import ResultTerm from './ResultTerm';
 import IdeTopBar from './IdeTopBar';
+import { useParams } from 'react-router-dom';
 
 export default function JavaCodeEditor({
   leftWidth,
@@ -20,7 +21,8 @@ export default function JavaCodeEditor({
   const editorRef = useRef(null);
   const [code, setCode] = useState('');
   const [result, setResult] = useState('');
-
+  const { questionIdParam } = useParams();
+  console.log('editorQID : ', questionIdParam);
   const editorOptions = {
     selectOnLineNumbers: true,
     automaticLayout: true,
@@ -44,11 +46,6 @@ export default function JavaCodeEditor({
 
   const handleEditorDidMount = (editor, monaco) => {
     editorRef.current = editor;
-  };
-
-  const handleMouseDown = (e) => {
-    e.preventDefault();
-    setIsResizing(true);
   };
 
   const [topHeigth, setTopGeigth] = useState(80); // 초기 왼쪽 너비 설정
@@ -80,6 +77,11 @@ export default function JavaCodeEditor({
     };
   }, [isResizing]);
 
+  const handleMouseDown = (e) => {
+    e.preventDefault();
+    setIsResizing(true);
+  };
+
   useEffect(() => {
     if (!monaco) return;
 
@@ -105,7 +107,8 @@ export default function JavaCodeEditor({
     await axios
       .post(
         'https://4s06mb280b.execute-api.ap-northeast-2.amazonaws.com/compile',
-        { questionId: 'q1', uuid: 3, requestCode: code, language: 'java' }
+        { questionId: 'q1', uuid: 3, requestCode: code, language: 'java' },
+        { withCredentials: true }
       )
       .then((res) => {
         setResult(res.data);
@@ -122,13 +125,13 @@ export default function JavaCodeEditor({
         { questionId: 'q1', uuid: 3 }
       )
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         setCode(res.data);
+        console.log(javaDefaultValue(questionIdParam));
       })
       .catch((err) => {
-        console.log(err.response.status);
         if (err.response.status === 500) {
-          setCode(javaDefaultValue);
+          setCode(javaDefaultValue(questionIdParam));
         }
       });
   };
