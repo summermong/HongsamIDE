@@ -92,7 +92,7 @@ public class MemberService {
             return new MemberResponse(401, "password가 빈 문자열 입니다.");
         } else if (password != null) {
             if (member.getPassword().equals(password)) {
-                return new MemberResponse(402, "password가 빈 문자열 입니다.");
+                return new MemberResponse(402, "기존의 비밀번호와 동일합니다.");
             }
             member.setPassword(password);
         }

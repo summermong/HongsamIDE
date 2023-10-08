@@ -54,7 +54,19 @@ public class MemberInfoController {
     @PostMapping("/pw-check")
     public MemberResponse checkPassword(PasswordCheckDto passwordCheckDto,
                                         @SessionAttribute(value = "loginMember", required = false) LoginMemberResponse loginMember) {
+
+        if (loginMember == null) {
+            return new MemberResponse(400, "로그인 유저 정보 없음");
+        }
+
         return memberService.checkPassword(passwordCheckDto.getPassword(), loginMember.getEmail());
+    }
+
+    @PostMapping
+    public void test() throws IOException {
+        String url = "";
+
+        s3Service.deleteFile(url.split("/")[3]);
     }
 
 
