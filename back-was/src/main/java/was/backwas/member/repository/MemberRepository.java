@@ -17,6 +17,7 @@ public class MemberRepository {
         em.persist(member);
     }
 
+    // 회원가입시 중복 이메일 체크용
     public List<Member> findMemberByEmail(String email) {
 
         return em.createQuery("select m from Member m where m.email = :email", Member.class)
@@ -30,5 +31,20 @@ public class MemberRepository {
                 .getSingleResult();
     }
 
+    // 이메일로 회원 1명 찾기
+    public Member findMemberByEmailOne(String email) {
+
+        return em.createQuery("select m from Member m where m.email = :email", Member.class)
+                .setParameter("email", email)
+                .getSingleResult();
+    }
+
+    // uuid로 회원 찾기
+    public Member findMemberByUUID(String uuid) {
+
+        return em.createQuery("select m from Member m where m.uuid = :uuid", Member.class)
+                .setParameter("uuid", uuid)
+                .getSingleResult();
+    }
 
 }

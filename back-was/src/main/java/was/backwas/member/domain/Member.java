@@ -20,5 +20,6 @@ public class Member {
     private String password;
     private String username;
     private String uuid;
+    private String profileUrl;
 
 }
