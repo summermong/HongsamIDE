@@ -30,7 +30,7 @@ export default function IdeTopBar({ showValue, isDarkMode, setIsDarkMode }) {
           alert(res.data.data);
           navigate('/guest');
         }
-        setSender(res.data.data.userName);
+        setSender(res.data.data.username);
       })
       .catch((err) => {
         console.log(err);
@@ -46,9 +46,9 @@ export default function IdeTopBar({ showValue, isDarkMode, setIsDarkMode }) {
 
   const openChat = () => {
     isChatOpen ? setIsChatOpen(false) : setIsChatOpen(true);
-    console.log('uuid : ', uuid);
-    console.log('roomId : ', roomId);
-    console.log('sender : ', sender);
+    console.log('topBarUUID : ', uuid);
+    console.log('topBarROOMID : ', roomId);
+    console.log('topBarSENDER : ', sender);
   };
 
   return (

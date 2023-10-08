@@ -21,7 +21,8 @@ export default function JavaCodeEditor({
   const editorRef = useRef(null);
   const [code, setCode] = useState('');
   const [result, setResult] = useState('');
-  const { questionIdParam } = useParams();
+  const { uuidParams, questionIdParam } = useParams();
+  console.log('editorUUID : ', uuidParams);
   console.log('editorQID : ', questionIdParam);
   const editorOptions = {
     selectOnLineNumbers: true,
@@ -107,7 +108,12 @@ export default function JavaCodeEditor({
     await axios
       .post(
         'https://4s06mb280b.execute-api.ap-northeast-2.amazonaws.com/compile',
-        { questionId: 'q1', uuid: 3, requestCode: code, language: 'java' },
+        {
+          questionId: questionIdParam,
+          uuid: uuidParams,
+          requestCode: code,
+          language: 'java',
+        },
         { withCredentials: true }
       )
       .then((res) => {
@@ -122,10 +128,9 @@ export default function JavaCodeEditor({
     await axios
       .post(
         'https://4s06mb280b.execute-api.ap-northeast-2.amazonaws.com/getcode',
-        { questionId: 'q1', uuid: 3 }
+        { questionId: questionIdParam, uuid: uuidParams }
       )
       .then((res) => {
-        // console.log(res.data);
         setCode(res.data);
         console.log(javaDefaultValue(questionIdParam));
       })
