@@ -99,4 +99,15 @@ public class MemberService {
 
         return new MemberResponse(200, loginMember);
     }
+
+    public MemberResponse checkPassword(String password, String email) {
+
+        Member member = memberRepository.findMemberByEmailOne(email);
+
+        if (member.getPassword().equals(password)) {
+            return new MemberResponse(200, "비밀번호 일치 확인");
+        } else {
+            return new MemberResponse(400, "비밀번호가 일치하지 않습니다.");
+        }
+    }
 }

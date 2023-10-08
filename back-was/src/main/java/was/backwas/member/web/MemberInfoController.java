@@ -4,10 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import was.backwas.member.domain.LoginMemberResponse;
-import was.backwas.member.domain.Member;
-import was.backwas.member.domain.MemberResponse;
-import was.backwas.member.domain.MemberUpdateDto;
+import was.backwas.member.domain.*;
 import was.backwas.member.repository.MemberRepository;
 import was.backwas.member.service.MemberService;
 import was.backwas.member.service.S3Service;
@@ -25,7 +22,7 @@ public class MemberInfoController {
     private final MemberService memberService;
 
     // 프로필 사진 수정
-    @PostMapping("/members/profile-img")
+    @PostMapping("/profile-img")
     public MemberResponse updateProfileImg(@RequestParam("profileImg") MultipartFile multipartFile,
                                            @SessionAttribute(value = "loginMember", required = false) LoginMemberResponse loginMember) throws IOException {
 
@@ -42,7 +39,7 @@ public class MemberInfoController {
     }
 
     // 회원 정보 수정
-    @PutMapping("/mypage/members/info")
+    @PutMapping("/info")
     public MemberResponse updateMemberInfo(MemberUpdateDto memberUpdateDto,
                                            @SessionAttribute(value = "loginMember", required = false) LoginMemberResponse loginMember) {
 
@@ -52,5 +49,13 @@ public class MemberInfoController {
 
         return memberService.updateMemberInfo(loginMember, memberUpdateDto.getUsername(),memberUpdateDto.getPassword());
     }
+
+    // 비밀번호 확인
+    @PostMapping("/pw-check")
+    public MemberResponse checkPassword(PasswordCheckDto passwordCheckDto,
+                                        @SessionAttribute(value = "loginMember", required = false) LoginMemberResponse loginMember) {
+        return memberService.checkPassword(passwordCheckDto.getPassword(), loginMember.getEmail());
+    }
+
 
 }
