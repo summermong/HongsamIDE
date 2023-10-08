@@ -4,10 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import was.backwas.member.domain.LoginDto;
-import was.backwas.member.domain.LoginMemberResponse;
-import was.backwas.member.domain.Member;
-import was.backwas.member.domain.MemberResponse;
+import was.backwas.member.domain.*;
 import was.backwas.member.repository.MemberRepository;
 
 import java.util.List;
@@ -74,5 +71,32 @@ public class MemberService {
 
         return new MemberResponse(200, uuid);
 
+    }
+
+    @Transactional
+    public MemberResponse updateMemberInfo(LoginMemberResponse loginMember, String username, String password) {
+
+        Member member = memberRepository.findMemberByEmailOne(loginMember.getEmail());
+
+        if (username != null && username.trim().isEmpty()) {
+            // null X, 빈 문자열 왔을 때
+            return new MemberResponse(401, "username이 빈 문자열 입니다.");
+        } else if (username != null) {
+            // db update
+            member.setUsername(username);
+            // 세션 정보 변경
+            loginMember.setUsername(username);
+        }
+
+        if (password != null && password.trim().isEmpty()) {
+            return new MemberResponse(401, "password가 빈 문자열 입니다.");
+        } else if (password != null) {
+            if (member.getPassword().equals(password)) {
+                return new MemberResponse(402, "password가 빈 문자열 입니다.");
+            }
+            member.setPassword(password);
+        }
+
+        return new MemberResponse(200, loginMember);
     }
 }
