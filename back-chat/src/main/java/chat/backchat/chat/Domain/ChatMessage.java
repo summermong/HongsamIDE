@@ -27,5 +27,13 @@ public class ChatMessage {
     private String time;
 
     private String uuid;
+
+    public ChatMessage(ChatMessageSaveDto chatMessageSaveDto) {
+        this.roomId = chatMessageSaveDto.getRoomId();
+        this.sender = chatMessageSaveDto.getSender();
+        this.message = chatMessageSaveDto.getMessage();
+        this.date = chatMessageSaveDto.getDate();
+        this.time = chatMessageSaveDto.getTime();
+    }
 }
 
