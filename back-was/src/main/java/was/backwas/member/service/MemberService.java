@@ -109,12 +109,23 @@ public class MemberService {
 
         Member member = memberRepository.findMemberByEmailOne(email);
 
-        log.info("db에서 꺼낸 비밀번호={}",member.getPassword());
-
         if (member.getPassword().equals(password)) {
             return new MemberResponse(200, "비밀번호 일치 확인");
         } else {
             return new MemberResponse(400, "비밀번호가 일치하지 않습니다.");
         }
     }
+
+    public MemberResponse deleteMember(String email) {
+
+        int deleteResult = memberRepository.deleteMember(email);
+
+        if (deleteResult == 1) {
+            return new MemberResponse(200, "회원 탈퇴 성공");
+        } else {
+            return new MemberResponse(402, "회원 탈퇴 실패");
+        }
+    }
+
+
 }

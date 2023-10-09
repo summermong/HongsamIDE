@@ -64,6 +64,18 @@ public class MemberInfoController {
         return memberService.checkPassword(passwordCheckDto.getPassword(), loginMember.getEmail());
     }
 
+    // 회원 탙퇴
+    @DeleteMapping("/members")
+    public MemberResponse deleteMember(@SessionAttribute(value = "loginMember", required = false) LoginMemberResponse loginMember) {
+
+        if (loginMember == null) {
+            return new MemberResponse(400, "로그인 유저 정보 없음");
+        }
+
+        return memberService.deleteMember(loginMember.getEmail());
+    }
+
+    // 사진 파일 삭제용 테스트
     @PostMapping
     public void test() throws IOException {
         String url = "";
