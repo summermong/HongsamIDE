@@ -35,6 +35,8 @@ public class MemberInfoController {
 //      s3에 파일 올리기
         String imgUrl = s3Service.uploadFiles(member.getUuid(), multipartFile, "image");
 
+        loginMember.setProfileUrl(imgUrl);
+
         return new MemberResponse(200,imgUrl);
     }
 

@@ -22,6 +22,7 @@ public class MemberService {
 
         // 컨테이너 연결을 위한 uuid 생성
         member.setUuid(UUID.randomUUID().toString());
+        member.setProfileUrl("https://hongsam-ide-user.s3.ap-northeast-2.amazonaws.com/default.webp");
 
         memberRepository.save(member);
 
@@ -55,6 +56,7 @@ public class MemberService {
             LoginMemberResponse loginMemberResponse = new LoginMemberResponse();
             loginMemberResponse.setUsername(member.getUsername());
             loginMemberResponse.setEmail(member.getEmail());
+            loginMemberResponse.setProfileUrl(member.getProfileUrl());
 
             return loginMemberResponse;
 

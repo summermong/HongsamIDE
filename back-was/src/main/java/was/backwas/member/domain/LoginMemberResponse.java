@@ -10,12 +10,14 @@ public class LoginMemberResponse {
 
     private String email;
     private String username;
+    private String profileUrl;
 
     public LoginMemberResponse() {
     }
 
-    public LoginMemberResponse(String email, String name) {
+    public LoginMemberResponse(String email, String username, String profileUrl) {
         this.email = email;
-        this.username = name;
+        this.username = username;
+        this.profileUrl = profileUrl;
     }
 }
