@@ -94,7 +94,6 @@ public class ChatRoomRepository {
     }
 
 
-
     /**
      * 채팅방 생성 : 서버간 채팅방 공유를 위해 redis hash에 저장한다.
      */

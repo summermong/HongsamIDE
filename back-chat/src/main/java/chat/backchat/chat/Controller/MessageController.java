@@ -1,6 +1,7 @@
 package chat.backchat.chat.Controller;
 
 import chat.backchat.chat.Domain.ChatMessage;
+import chat.backchat.chat.Service.ChatService;
 import chat.backchat.chat.pubsub.RedisPublisher;
 import chat.backchat.chat.repository.ChatRoomRepository;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +18,7 @@ public class MessageController {
 
     private final RedisPublisher redisPublisher;
     private final ChatRoomRepository chatRoomRepository;
+    private final ChatService chatService;
 
     /**
      * websocket "/pub/chat/message"로 들어오는 메시징을 처리한다.
@@ -27,10 +29,16 @@ public class MessageController {
 //            chatRoomRepository.enterChatRoom(message.getRoomId());
             chatRoomRepository.enterChatRoom(message.getRoomId(),message.getUuid());
             message.setMessage(message.getSender() + "님이 입장하셨습니다.");
+
+            log.info("입장 메세지 전송");
+            redisPublisher.publish(chatRoomRepository.getTopic(message.getRoomId()), message);
+        } else {
+            log.info("메세지 전송");
+            redisPublisher.publish(chatRoomRepository.getTopic(message.getRoomId()), message);
+
+            chatService.saveMessage(message);
         }
-        // Websocket에 발행된 메시지를 redis로 발행한다(publish)
-        log.info("메세지 전송");
-        redisPublisher.publish(chatRoomRepository.getTopic(message.getRoomId()), message);
+
     }
 
 //    @GetMapping("/redis")
