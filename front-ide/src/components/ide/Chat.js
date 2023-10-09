@@ -77,53 +77,51 @@ function Chat({ uuid, roomId, sender }) {
   }, [stompClient]);
 
   return (
-    <div className='bg-white'>
-      <div className={styles.Mock}>
-        <div className={styles.chat} ref={scrollContainerRef}>
-          {messages.map((message, index) => (
-            <div
-              key={index}
-              className={
-                message.type === 'ENTER'
-                  ? styles.enter
-                  : message.sender === `${sender}`
-                  ? styles.send
-                  : styles.receive
-              }
-            >
-              {message.type === 'ENTER' ? (
-                <div className={styles.enterMessage}>{message.message}</div>
-              ) : message.sender === `${sender}` ? (
-                <div className={styles.send}>
-                  <div className={styles.sender}>{message.sender}</div>
-                  <span className={styles.sendChat}>{message.message}</span>
-                  <div className={styles.time}>{message.time}</div>
-                </div>
-              ) : (
-                <div className={styles.receive}>
-                  <div className={styles.receiver}>{message.sender}</div>
-                  <span className={styles.receiveChat}>{message.message}</span>
-                  <div className={styles.time}>{message.time}</div>
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
-        <div className={styles.text}>
-          <input
-            type='text'
-            placeholder='메시지를 입력해주세요.'
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-            onKeyUp={(e) => {
-              if (e.key === 'Enter') {
-                sendMessage();
-              }
-            }}
-          />
+    <div className={styles.Mock}>
+      <div className={styles.chat} ref={scrollContainerRef}>
+        {messages.map((message, index) => (
+          <div
+            key={index}
+            className={
+              message.type === 'ENTER'
+                ? styles.enter
+                : message.sender === `${sender}`
+                ? styles.send
+                : styles.receive
+            }
+          >
+            {message.type === 'ENTER' ? (
+              <div className={styles.enterMessage}>{message.message}</div>
+            ) : message.sender === `${sender}` ? (
+              <div className={styles.send}>
+                <div className={styles.sender}>{message.sender}</div>
+                <span className={styles.sendChat}>{message.message}</span>
+                <div className={styles.time}>{message.time}</div>
+              </div>
+            ) : (
+              <div className={styles.receive}>
+                <div className={styles.receiver}>{message.sender}</div>
+                <span className={styles.receiveChat}>{message.message}</span>
+                <div className={styles.time}>{message.time}</div>
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+      <div className={styles.text}>
+        <input
+          type='text'
+          placeholder='메시지를 입력해주세요.'
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
+          onKeyUp={(e) => {
+            if (e.key === 'Enter') {
+              sendMessage();
+            }
+          }}
+        />
 
-          <button onClick={sendMessage}>전송</button>
-        </div>
+        <button onClick={sendMessage}>전송</button>
       </div>
     </div>
   );

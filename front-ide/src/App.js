@@ -6,6 +6,7 @@ import JavaCodeEditor from './components/ide/JavaCodeEditor';
 import { useEffect, useState } from 'react';
 import { Route, Routes, useParams } from 'react-router-dom';
 import Guest from './pages/Guest';
+import IdeBottomBar from './components/ide/IdeBottomBar';
 
 function App() {
   const [leftWidth, setLeftWidth] = useState(30); // 초기 왼쪽 너비 설정
@@ -55,25 +56,28 @@ function App() {
           //uuid/questionId useParams로 받아오기
           path='/:uuidParam/:questionIdParam'
           element={
-            <div
-              className={`flex w-full h-full ${
-                isDarkMode ? 'bg-zinc-800 text-white' : ''
-              } transition`}
-            >
-              <QuestionBar
-                leftWidth={leftWidth}
-                handleMouseDown={handleMouseDown}
-              />
+            <>
+              <div
+                className={`flex ${
+                  isDarkMode ? 'bg-zinc-800 text-white' : ''
+                } transition`}
+              >
+                <QuestionBar
+                  leftWidth={leftWidth}
+                  handleMouseDown={handleMouseDown}
+                />
 
-              <JavaCodeEditor
-                leftWidth={leftWidth}
-                isDarkMode={isDarkMode}
-                setIsDarkMode={setIsDarkMode}
-              />
-            </div>
+                <JavaCodeEditor
+                  leftWidth={leftWidth}
+                  isDarkMode={isDarkMode}
+                  setIsDarkMode={setIsDarkMode}
+                />
+                <IdeBottomBar isDarkMode={isDarkMode} />
+              </div>
+            </>
           }
         />
-        <Route path='/:uuidParam/:questionIdParam/guest' element={<Guest />} />
+        <Route path='/guest' element={<Guest />} />
       </Routes>
     </>
   );
