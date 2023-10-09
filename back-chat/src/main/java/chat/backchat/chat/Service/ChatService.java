@@ -9,7 +9,9 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -32,6 +34,24 @@ public class ChatService {
         redisTemplateMessage.opsForList().rightPush(message.getRoomId(), message);
 
         redisTemplateMessage.expire(message.getRoomId(), 1, TimeUnit.MINUTES);
+
+    }
+
+    public List<ChatMessage> loadMessage(String roomId) {
+
+        List<ChatMessage> messageList = new ArrayList<>();
+
+        // redis 캐시에서 50개 가져오기
+        List<ChatMessage> redisMessageList = redisTemplateMessage.opsForList().range(roomId, 0, 50);
+
+        if (redisMessageList == null || redisMessageList.isEmpty()) {
+            // 캐시에 없을 때 db에서 가져오기
+
+
+        } else {
+
+        }
+
 
     }
 

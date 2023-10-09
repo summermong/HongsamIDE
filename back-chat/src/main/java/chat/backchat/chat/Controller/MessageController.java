@@ -9,7 +9,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -39,6 +42,12 @@ public class MessageController {
             chatService.saveMessage(message);
         }
 
+    }
+
+    // 메세지 불러오기
+    @GetMapping("/chat/message/{roomId}")
+    public List<ChatMessage> loadMessage(@PathVariable String roomId) {
+        return chatService.loadMessage(roomId);
     }
 
 //    @GetMapping("/redis")
