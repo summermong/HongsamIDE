@@ -84,6 +84,9 @@ public class MemberService {
             // null X, 빈 문자열 왔을 때
             return new MemberResponse(401, "username이 빈 문자열 입니다.");
         } else if (username != null) {
+            if (member.getUsername().equals(username)) {
+                return new MemberResponse(403, "기존의 이름과 동일합니다.");
+            }
             // db update
             member.setUsername(username);
             // 세션 정보 변경
