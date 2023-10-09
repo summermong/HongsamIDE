@@ -26,7 +26,7 @@ public class S3Service {
     private final AmazonS3Client amazonS3Client;
     private final MemberRepository memberRepository;
 
-    @Value("${cloud.aws.s3.bucket}")
+    @Value("${cloud.aws.s3.bucket.user}")
     private String bucket;
 
     @Transactional
