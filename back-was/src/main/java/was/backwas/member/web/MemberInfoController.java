@@ -42,7 +42,7 @@ public class MemberInfoController {
 
     // 회원 정보 수정
     @PutMapping("/info")
-    public MemberResponse updateMemberInfo(MemberUpdateDto memberUpdateDto,
+    public MemberResponse updateMemberInfo(@RequestBody MemberUpdateDto memberUpdateDto,
                                            @SessionAttribute(value = "loginMember", required = false) LoginMemberResponse loginMember) {
 
         if (loginMember == null) {
@@ -54,13 +54,14 @@ public class MemberInfoController {
 
     // 비밀번호 확인
     @PostMapping("/pw-check")
-    public MemberResponse checkPassword(PasswordCheckDto passwordCheckDto,
+    public MemberResponse checkPassword(@RequestBody PasswordCheckDto passwordCheckDto,
                                         @SessionAttribute(value = "loginMember", required = false) LoginMemberResponse loginMember) {
 
         if (loginMember == null) {
             return new MemberResponse(400, "로그인 유저 정보 없음");
         }
-
+        log.info("들어온 비밀번호={}",passwordCheckDto.getPassword());
+        log.info("이메일={}",loginMember.getEmail());
         return memberService.checkPassword(passwordCheckDto.getPassword(), loginMember.getEmail());
     }
 

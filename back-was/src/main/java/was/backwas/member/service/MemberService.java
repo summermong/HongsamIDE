@@ -106,6 +106,8 @@ public class MemberService {
 
         Member member = memberRepository.findMemberByEmailOne(email);
 
+        log.info("db에서 꺼낸 비밀번호={}",member.getPassword());
+
         if (member.getPassword().equals(password)) {
             return new MemberResponse(200, "비밀번호 일치 확인");
         } else {
