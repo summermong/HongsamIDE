@@ -8,10 +8,9 @@ import TermTopBar from './TermTopBar';
 export default function ResultTerm({ result, topHeigth, handleMouseDown }) {
   return (
     <div
-      className={`${styles.resultTermContainer} overflow-y-scroll border-t`}
+      className={`${styles.resultTermContainer} border-t`}
       style={{
-        height: `100 - ${topHeigth}%`,
-        borderColor: 'var(--main-color)',
+        maxHeight: `calc(100% - ${topHeigth}%)`,
       }}
     >
       <div
@@ -20,7 +19,14 @@ export default function ResultTerm({ result, topHeigth, handleMouseDown }) {
       ></div>
       <TermTopBar />
       <div>
-        <p className='pl-5'>{result}</p>
+        <p className='pl-5 whitespace-pre-line'>
+          {result.split('\n').map((line, index) => (
+            <span key={index}>
+              {line}
+              <br />
+            </span>
+          ))}
+        </p>
       </div>
     </div>
   );
