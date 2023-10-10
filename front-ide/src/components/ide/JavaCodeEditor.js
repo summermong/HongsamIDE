@@ -11,6 +11,7 @@ import styles from './JavaCodeEditor.module.css';
 import ResultTerm from './ResultTerm';
 import IdeTopBar from './IdeTopBar';
 import { useParams } from 'react-router-dom';
+import ResultModal from './ResultModal';
 
 export default function JavaCodeEditor({
   leftWidth,
@@ -22,8 +23,8 @@ export default function JavaCodeEditor({
   const [code, setCode] = useState('');
   const [result, setResult] = useState('');
   const { uuidParam, questionIdParam } = useParams();
-  console.log('editorUUID : ', uuidParam);
-  console.log('editorQID : ', questionIdParam);
+  const [resultModalView, setResultModalView] = useState(false);
+
   const editorOptions = {
     selectOnLineNumbers: true,
     automaticLayout: true,
@@ -95,36 +96,54 @@ export default function JavaCodeEditor({
       ? monaco.editor.setTheme('tomorrowDark')
       : monaco.editor.setTheme('tomorrow');
   }, [monaco, isDarkMode]);
-  // useEffect(() => {
-  //   isDarkMode
-  //     ? monaco.editor.setTheme('tomorrowDark')
-  //     : monaco.editor.setTheme('tomorrow');
-  // }, [isDarkMode]);
 
-  const showValue = async () => {
+  const compileCode = async () => {
     const code = editorRef.current.getValue();
-    alert(editorRef.current.getValue());
-
+    setResult('코드 컴파일 진행중 ...');
     await axios
       .post(
         'https://4s06mb280b.execute-api.ap-northeast-2.amazonaws.com/compile',
         {
-          questionId: questionIdParam,
           uuid: uuidParam,
+          questionId: questionIdParam,
           requestCode: code,
           language: 'java',
-        },
-        { withCredentials: true }
+        }
       )
       .then((res) => {
         setResult(res.data);
+        if (res.data === '정답입니다.' || res.data === '틀렸습니다.') {
+          setResultModalView(true);
+        }
       })
       .catch((err) => {
         console.log(err);
       });
   };
+  const saveCode = async () => {
+    const code = editorRef.current.getValue();
+    setResult('코드 저장 중...');
+    await axios
+      .post(
+        'https://4s06mb280b.execute-api.ap-northeast-2.amazonaws.com/savecode',
+        {
+          uuid: uuidParam,
+          questionId: questionIdParam,
+          requestCode: code,
+          language: 'java',
+        }
+      )
+      .then((res) => {
+        setResult('코드 저장 완료');
+      })
+      .catch((err) => {
+        console.log(err);
+        setResult('코드 저장 실패 \n Run을 눌러도 코드 저장을 할수 있습니다.');
+      });
+  };
 
   const fetchCode = async () => {
+    setResult('코드 불러오기중...');
     await axios
       .post(
         'https://4s06mb280b.execute-api.ap-northeast-2.amazonaws.com/getcode',
@@ -132,11 +151,14 @@ export default function JavaCodeEditor({
       )
       .then((res) => {
         setCode(res.data);
-        console.log(javaDefaultValue(questionIdParam));
+        setResult('코드 불러오기 완료');
       })
       .catch((err) => {
         if (err.response.status === 500) {
           setCode(javaDefaultValue(questionIdParam));
+          setResult(
+            '주석을 보고 코드 작성 방법을 이해한 후에 아래의 타이머를 시작하여 문제를 풀어보세요 ! \n 아래의 타이머를 이용해서 내가 문제를 푼 동안 걸린 시간을 측정해보세요 !'
+          );
         }
       });
   };
@@ -149,8 +171,18 @@ export default function JavaCodeEditor({
 
   return (
     <>
+      {resultModalView ? (
+        <ResultModal
+          isDarkMode={isDarkMode}
+          result={result}
+          setResultModalView={setResultModalView}
+        />
+      ) : null}
+
       <IdeTopBar
-        showValue={showValue}
+        compileCode={compileCode}
+        fetchCode={fetchCode}
+        saveCode={saveCode}
         isDarkMode={isDarkMode}
         setIsDarkMode={setIsDarkMode}
       />
@@ -170,7 +202,6 @@ export default function JavaCodeEditor({
           options={editorOptions}
           onChange={handleEditorChange}
         />
-
         <ResultTerm
           result={result}
           topHeigth={topHeigth}
