@@ -51,7 +51,7 @@ const Login = () => {
         <input
           name="email"
           type="email"
-          autoComplete="on"
+          autoComplete="off"
           placeholder="아이디를 입력하세요."
           {...register('email', {
             required: true,
@@ -64,7 +64,7 @@ const Login = () => {
         <input
           name="password"
           type="password"
-          autoComplete="on"
+          autoComplete="off"
           placeholder="비밀번호를 입력하세요."
           {...register('password', {
             required: true,

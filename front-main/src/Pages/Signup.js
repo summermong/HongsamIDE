@@ -1,5 +1,5 @@
-import React, { useForm } from 'react-hook-form';
-import { useRef, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import React, { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './Signup.module.css';
 import axios from 'axios';
@@ -86,7 +86,7 @@ const Signup = () => {
           <input
             name="email"
             type="text"
-            autoComplete="on"
+            autoComplete="off"
             placeholder="이메일 형식으로 입력해주세요."
             {...register('email', {
               required: true,
@@ -112,7 +112,7 @@ const Signup = () => {
         <input
           name="password"
           type="password"
-          autoComplete="on"
+          autoComplete="off"
           placeholder="영문+숫자+특수문자 조합의 7~15자로 입력해주세요."
           {...register('password', {
             required: true,
@@ -131,7 +131,7 @@ const Signup = () => {
         <input
           name="confirm"
           type="password"
-          autoComplete="on"
+          autoComplete="off"
           placeholder="비밀번호를 다시 입력해주세요."
           {...register('confirm', {
             required: true,
@@ -148,7 +148,7 @@ const Signup = () => {
         <label>Name</label>
         <input
           name="username"
-          autoComplete="on"
+          autoComplete="off"
           placeholder="이름을 10자 이내로 입력해주세요."
           {...register('username', {
             required: true,
