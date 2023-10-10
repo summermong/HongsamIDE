@@ -73,7 +73,12 @@ const Nav = () => {
           className={styles.username}
           onClick={isLoggedIn ? toggleDropdown : goToLogin}
         >
-          {userName}
+          <div className={styles.userPhoto}>
+            {userData && userData.profileUrl && (
+              <img src={userData.profileUrl} alt="유저 이미지" />
+            )}
+            {userName}
+          </div>
           {isLoggedIn && isDropdownOpen && (
             <div className={styles.dropdown} ref={dropdownRef}>
               <ul>

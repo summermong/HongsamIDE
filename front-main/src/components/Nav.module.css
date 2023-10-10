@@ -26,6 +26,18 @@
   cursor: pointer;
 }
 
+.userPhoto {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.userPhoto img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
+
 .dropdown {
   position: absolute;
   background-color: white;
