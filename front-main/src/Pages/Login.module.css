@@ -24,7 +24,7 @@
   letter-spacing: 0.2cm;
 }
 
-form {
+.form {
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -33,7 +33,7 @@ form {
   padding-top: 30px;
 }
 
-input {
+.form input {
   display: block;
   box-sizing: border-box;
   width: 100%;
@@ -46,7 +46,7 @@ input {
   font-family: 'NeoDunggeunmoPro-Regular';
 }
 
-label {
+.form label {
   line-height: 2;
   text-align: left;
   display: block;

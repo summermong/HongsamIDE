@@ -28,14 +28,14 @@
   letter-spacing: 0.2cm;
 }
 
-form {
+.form {
   width: 100%;
   max-width: 400px;
   margin: 0 auto;
   padding-top: 30px;
 }
 
-input {
+.Signup input {
   display: block;
   box-sizing: border-box;
   width: 100%;
@@ -47,7 +47,7 @@ input {
   font-size: 14px;
 }
 
-label {
+.Signup label {
   line-height: 2;
   text-align: left;
   display: block;
