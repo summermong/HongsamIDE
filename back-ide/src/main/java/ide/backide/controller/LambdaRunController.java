@@ -3,6 +3,7 @@ package ide.backide.controller;
 import ide.backide.domain.UserRunRequest;
 import ide.backide.service.CompilerService;
 import ide.backide.service.FileIOService;
+import ide.backide.service.RestTemplateService;
 import ide.backide.service.S3Service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -18,10 +19,12 @@ public class LambdaRunController implements Function<UserRunRequest, String> {
     private final S3Service s3Service;
     private final CompilerService compilerService;
     private final FileIOService fileIOService;
+    private final RestTemplateService restTemplateService;
 
 
     @Override
     public String apply(UserRunRequest userRunRequest) {
+
         File file = null;
         if (userRunRequest.getRequestCode().equals("") || userRunRequest.getRequestCode() == null) {
             return "코드를 올바르게 입력하세요.";

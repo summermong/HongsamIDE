@@ -2,6 +2,7 @@ package ide.backide.service;
 
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
@@ -27,6 +28,9 @@ public class RestTemplateService {
                 UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(apiUrl)
                         .queryParam("JSESSIONID", value);
                 String uriStringWithParam = builder.toUriString();
+
+                HttpHeaders headers = new HttpHeaders();
+                headers.add("Cookie", "JSESSIONID=" + value);
 
                 ResponseEntity<String> responseEntity = restTemplate.getForEntity(uriStringWithParam, String.class);
 
