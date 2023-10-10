@@ -18,12 +18,10 @@
   gap: 40px;
 }
 
-.userInfoContainer .userPhoto {
+.userPhotoContainer {
   width: 200px;
   height: 200px;
-  background-color: beige;
   border-radius: 50%;
-  margin-top: 10%;
 }
 
 .userInfo,
@@ -43,7 +41,7 @@
   color: var(--main-color);
 }
 
-.Mypage button {
+.userBtns .modifyBtn {
   width: 80%;
   height: 30px;
   border: none;
@@ -55,13 +53,22 @@
   cursor: pointer;
 }
 
-.Mypage button:hover {
+.userBtns .modifyBtn:hover {
   background-color: var(--mainDark-color);
 }
 
-.userInfo .changingNameBtn {
-  width: 50px;
-  height: 20px;
-  padding: 3px;
-  font-size: 12px;
+.userBtns .quitBtn {
+  width: 80%;
+  height: 30px;
+  border: none;
+  border-radius: 5px;
+  background-color: rgb(247, 50, 50);
+  color: white;
+  font-size: 14px;
+  padding: 5px;
+  cursor: pointer;
+}
+
+.userBtns .quitBtn:hover {
+  background-color: var(--alert-color);
 }
