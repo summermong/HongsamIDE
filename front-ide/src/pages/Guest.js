@@ -1,13 +1,31 @@
 /** @format */
 
 import React, { useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 
-export default function Guest() {
-  const [guestName, setGuestName] = useState('');
+export default function Guest({ sender, setSender }) {
+  const navigate = useNavigate();
+  const [guestName, setGeustName] = useState('');
+  const { uuidParam, questionIdParam } = useParams();
+
+  const getGuestSendName = async () => {
+    await setSender(guestName);
+    navigate(`/${uuidParam}/${questionIdParam}`);
+  };
   return (
-    <div className='w-screen h-screen flex flex-col items-center justify-center gap-5'>
-      <h1 className=''>게스트로 입장합니다 사용하실 닉네임을 입력해주세요</h1>
-      <input className='w-6/3' type='text' />
+    <div className='w-screen h-screen flex flex-col items-center justify-center gap-5 bg-zinc-800 text-white text-center'>
+      <h1 className='text-lg'>
+        게스트로 입장합니다. <br /> 채팅방에서 사용하실 닉네임을 입력해주세요.
+      </h1>
+      <input
+        value={guestName}
+        onChange={(e) => {
+          setGeustName(e.target.value);
+        }}
+        className='rounded-md text-black'
+        type='text'
+      />
+      <button onClick={getGuestSendName}>확인</button>
     </div>
   );
 }

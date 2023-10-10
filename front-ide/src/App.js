@@ -12,6 +12,7 @@ function App() {
   const [leftWidth, setLeftWidth] = useState(30); // 초기 왼쪽 너비 설정
   const [isResizing, setIsResizing] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const [sender, setSender] = useState('');
 
   useEffect(() => {
     const handleResize = (e) => {
@@ -20,7 +21,7 @@ function App() {
       const newLeftWidth = (e.clientX / totalWidth) * 100;
       const newRightWidth = 100 - newLeftWidth;
       setLeftWidth(newLeftWidth);
-      console.log('Resizing');
+
       // 오른쪽 div 너비도 설정할 수 있음: setRightWidth(newRightWidth);
     };
 
@@ -28,7 +29,6 @@ function App() {
       setIsResizing(false);
       window.removeEventListener('mousemove', handleResize);
       window.removeEventListener('mouseup', handleMouseUp);
-      console.log('MouseUp');
     };
 
     if (isResizing) {
@@ -45,8 +45,6 @@ function App() {
   const handleMouseDown = (e) => {
     e.preventDefault();
     setIsResizing(true);
-    console.log(isResizing);
-    console.log('MouseDown');
   };
 
   return (
@@ -59,8 +57,8 @@ function App() {
             <>
               <div
                 className={`flex ${
-                  isDarkMode ? 'bg-zinc-800 text-white' : ''
-                } transition`}
+                  isDarkMode ? 'bg-zinc-800 text-white' : 'bg-white'
+                }`}
               >
                 <QuestionBar
                   leftWidth={leftWidth}
@@ -72,12 +70,19 @@ function App() {
                   isDarkMode={isDarkMode}
                   setIsDarkMode={setIsDarkMode}
                 />
-                <IdeBottomBar isDarkMode={isDarkMode} />
+                <IdeBottomBar
+                  sender={sender}
+                  setSender={setSender}
+                  isDarkMode={isDarkMode}
+                />
               </div>
             </>
           }
         />
-        <Route path='/guest' element={<Guest />} />
+        <Route
+          path='/:uuidParam/:questionIdParam/guest'
+          element={<Guest sender={sender} setSender={setSender} />}
+        />
       </Routes>
     </>
   );
