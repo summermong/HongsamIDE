@@ -25,11 +25,11 @@ function App() {
   // body의 배경색을 설정
   useEffect(() => {
     if (isDarkMode) {
-      document.body.style.backgroundColor = 'black';
+      document.body.style.backgroundColor = '#27272A';
       document.body.style.color = 'white';
     } else {
       document.body.style.backgroundColor = 'white';
-      document.body.style.color = 'black';
+      document.body.style.color = '#27272A';
     }
   }, [isDarkMode]); // isDarkMode가 변경될 때만 실행
 
