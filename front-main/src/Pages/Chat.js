@@ -1,24 +1,26 @@
 import React, { useState, useEffect, useRef } from 'react';
 import SockJS from 'sockjs-client';
 import { Client } from '@stomp/stompjs';
+import axios from 'axios';
 import styles from './Chat.module.css';
 
 function Chat({ uuid, roomId, sender }) {
   const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState('');
   const [stompClient, setStompClient] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const scrollContainerRef = useRef(null); // useRef 초기화
+  // 가장 최신 메세지로 포커스
+  const scrollContainerRef = useRef(null);
 
   useEffect(() => {
-    // 렌더링 이후에 scrollContainerRef 설정
     if (scrollContainerRef.current) {
       scrollContainerRef.current.scrollTop =
         scrollContainerRef.current.scrollHeight;
     }
-  }, [messages]); // messages가 변경될 때 실행
+  }, [messages]);
 
-  // 메시지 보내기
+  // 발신 메세지
   const sendMessage = () => {
     if (stompClient && message) {
       stompClient.publish({
@@ -29,7 +31,7 @@ function Chat({ uuid, roomId, sender }) {
           sender: `${sender}`,
           message: message,
           date: new Date().toLocaleDateString(),
-          time: new Date().toLocaleTimeString(),
+          time: new Date().toLocaleTimeString().slice(0, -3),
           uuid: `${uuid}`,
         }),
       });
@@ -37,20 +39,19 @@ function Chat({ uuid, roomId, sender }) {
     }
   };
 
-  // WebSocket 연결 설정
+  // 컴포넌트가 마운트 될 때 웹소켓 연결 및 구독
   useEffect(() => {
     const socket = new SockJS('https://chat.hong-sam.online/ws/chat');
     const stompClient = new Client();
     stompClient.webSocketFactory = () => socket;
     stompClient.onConnect = () => {
-      // 입장 메시지 전송
       stompClient.publish({
         destination: '/pub/chat/message',
         body: JSON.stringify({
           type: 'ENTER',
           roomId: `${roomId}`,
           sender: `${sender}`,
-          message: null, // 이름에 따라 다른 입장 메시지
+          message: null,
           uuid: `${uuid}`,
         }),
       });
@@ -58,12 +59,15 @@ function Chat({ uuid, roomId, sender }) {
     };
     stompClient.activate();
 
+    // 컴포넌트가 마운트될 때 이전 대화 내용 불러오기 (추가)
+    fetchMessages();
+
     return () => {
       if (stompClient) {
         stompClient.deactivate();
       }
     };
-  }, []); // 빈 배열로 설정하여 한 번만 실행
+  }, []);
 
   useEffect(() => {
     if (stompClient) {
@@ -73,6 +77,27 @@ function Chat({ uuid, roomId, sender }) {
       });
     }
   }, [stompClient]);
+
+  // 이전 대화 내용을 불러오는 함수 (추가)
+  const fetchMessages = () => {
+    if (!isLoading) {
+      setIsLoading(true);
+
+      axios
+        .get(`https://chat.hong-sam.online/chat/message/${roomId}`, {
+          withCredentials: true,
+        })
+        .then((response) => {
+          const newMessages = response.data;
+          setMessages((prevMessages) => [...prevMessages, ...newMessages]);
+          setIsLoading(false);
+        })
+        .catch((error) => {
+          console.error(error);
+          setIsLoading(false);
+        });
+    }
+  };
 
   return (
     <div className={styles.Mock}>
@@ -118,7 +143,6 @@ function Chat({ uuid, roomId, sender }) {
             }
           }}
         />
-
         <button onClick={sendMessage}>전송</button>
       </div>
     </div>
