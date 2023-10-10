@@ -4,7 +4,6 @@ import styles from './Question.module.css';
 import Nav from '../Components/Nav';
 import axios from 'axios';
 import { useAuth } from '../api/AuthContext';
-import Chat from './Chat';
 import QuestionContainer from '../Components/QuestionContainer';
 import QuestionPageBtn from '../Components/QuestionPageBtn';
 
@@ -12,7 +11,6 @@ const Question = () => {
   const navigate = useNavigate();
 
   const { isLoggedIn, userData } = useAuth();
-  const [sender, setSender] = useState('');
 
   /* IDE로 이동하는 함수 */
   const goToEditor = (questionId) => {
@@ -35,23 +33,6 @@ const Question = () => {
     } else {
       alert('로그인을 해주세요.');
       navigate('/login');
-    }
-  };
-
-  /* web ide에 필요 */
-  const [uuid, setUuid] = useState('1234');
-  /* web ide에 필요 */
-  const [roomId, setRoomId] = useState('12341');
-  /* web ide에 필요 */
-  const [isChatOpen, setIsChatOpen] = useState(false);
-  /* web ide에 필요 */
-  const openChat = () => {
-    if (!isLoggedIn) {
-      alert('로그인 후 이용해주세요.');
-      navigate('/login');
-    } else {
-      setSender(userData.username);
-      setIsChatOpen(true);
     }
   };
 
@@ -179,10 +160,6 @@ const Question = () => {
           currentPage={currentPage}
           canGoToNextPage={canGoToNextPage}
         />
-        <button onClick={openChat}>채팅</button> {/* web ide에 필요 */}
-        {uuid && roomId && isChatOpen && (
-          <Chat uuid={uuid} roomId={roomId} sender={sender} />
-        )}
       </div>
     </div>
   );
