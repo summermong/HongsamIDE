@@ -1,9 +1,8 @@
 /** @format */
 
 .Mock {
-  width: 400px;
-  height: 400px;
-  /* border: 1px solid var(--main-color); */
+  width: 300px;
+  height: 465px;
   z-index: -999;
 }
 
@@ -12,7 +11,8 @@
   flex-direction: column;
   height: 400px;
   overflow-y: scroll;
-  padding: 0 10px;
+  border-bottom: 1px solid var(--main-color);
+  padding: 10px;
 }
 
 ::-webkit-scrollbar {
@@ -30,18 +30,26 @@
 }
 
 .text {
+  height: 65px;
   display: flex;
-  padding: 5px 5px;
   gap: 5px;
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 0 10px;
 }
 
-.text input {
-  height: 20px;
+.text textarea {
+  border: none;
+  resize: none;
+  outline: none;
+
   width: 350px;
   padding: 5px;
+}
+.text textarea::-webkit-scrollbar {
+  width: 0; /* 수평 스크롤바 너비를 0으로 설정 */
+  height: 0; /* 수직 스크롤바 높이를 0으로 설정 */
 }
 
 .text button {
@@ -49,12 +57,16 @@
   height: 30px;
   border: none;
   border-radius: 5px;
-  background-color: var(--main-color);
+  padding: 10px;
+  font-size: 12px;
   color: white;
   cursor: pointer;
 }
+.bgGreen {
+  background-color: var(--main-color);
+}
 
-.text button:hover {
+.bgGreen:hover {
   background-color: var(--mainDark-color);
 }
 

@@ -4,10 +4,14 @@ import React, { useState, useEffect, useRef } from 'react';
 import SockJS from 'sockjs-client';
 import { Client } from '@stomp/stompjs';
 import styles from './Chat.module.css';
+import axios from 'axios';
 
-function Chat({ uuid, roomId, sender }) {
+function Chat({ uuid, roomId, sender, isDarkMode }) {
   const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState('');
+  const [isMessageButton, setIsMessageButton] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
   const [stompClient, setStompClient] = useState(null);
 
   const scrollContainerRef = useRef(null); // useRef 초기화
@@ -23,6 +27,7 @@ function Chat({ uuid, roomId, sender }) {
   // 메시지 보내기
   const sendMessage = () => {
     if (stompClient && message) {
+      console.log('SEND!');
       stompClient.publish({
         destination: '/pub/chat/message',
         body: JSON.stringify({
@@ -31,7 +36,7 @@ function Chat({ uuid, roomId, sender }) {
           sender: `${sender}`,
           message: message,
           date: new Date().toLocaleDateString(),
-          time: new Date().toLocaleTimeString(),
+          time: new Date().toLocaleTimeString().slice(0, -3),
           uuid: `${uuid}`,
         }),
       });
@@ -59,6 +64,8 @@ function Chat({ uuid, roomId, sender }) {
       setStompClient(stompClient);
     };
     stompClient.activate();
+    // 컴포넌트가 마운트될 때 이전 대화 내용 불러오기 (추가)
+    fetchMessages();
 
     return () => {
       if (stompClient) {
@@ -75,6 +82,30 @@ function Chat({ uuid, roomId, sender }) {
       });
     }
   }, [stompClient]);
+  // const handleKeyDown = (e) => {
+  //   if (e.key === 'Enter' && !e.shiftKey) {
+  //     e.preventDefault(); // Enter 키 기본 동작(새 줄 추가) 방지
+  //     sendMessage();
+  //   }
+  // };
+  const fetchMessages = () => {
+    if (!isLoading) {
+      setIsLoading(true);
+      axios
+        .get(`https://chat.hong-sam.online/chat/message/${roomId}`, {
+          withCredentials: true,
+        })
+        .then((response) => {
+          const newMessages = response.data;
+          setMessages((prevMessages) => [...prevMessages, ...newMessages]);
+          setIsLoading(false);
+        })
+        .catch((error) => {
+          console.error(error);
+          setIsLoading(false);
+        });
+    }
+  };
 
   return (
     <div className={styles.Mock}>
@@ -109,19 +140,47 @@ function Chat({ uuid, roomId, sender }) {
         ))}
       </div>
       <div className={styles.text}>
-        <input
+        {/* <input
+          className={` ${isDarkMode ? 'bg-zinc-800 text-white' : 'bg-white'}`}
           type='text'
           placeholder='메시지를 입력해주세요.'
           value={message}
-          onChange={(e) => setMessage(e.target.value)}
+          onChange={(e) => {
+            setMessage(e.target.value);
+          }}
           onKeyUp={(e) => {
             if (e.key === 'Enter') {
               sendMessage();
             }
           }}
+        /> */}
+        <textarea
+          type='text'
+          placeholder='메시지를 입력해주세요.'
+          value={message}
+          className={` ${isDarkMode ? 'bg-zinc-800 text-white' : 'bg-white'}`}
+          onChange={(e) => setMessage(e.target.value)}
+          /**
+           * 한글처럼 한 글자에 여러가지 문자가 담기는 경후 조합하는 동안에 한번 더 출력이 되는 경우가 생긴다고 한다
+           */
+          onKeyDown={(e) => {
+            if (e.nativeEvent.isComposing) {
+              // isComposing 이 true 이면 조합 중이므로 동작을 막는다.
+              return;
+            }
+            if (e.key === 'Enter') {
+              e.preventDefault();
+              sendMessage();
+            }
+          }}
         />
-
-        <button onClick={sendMessage}>전송</button>
+        <button
+          className={`${!message.trim() ? 'bg-zinc-900' : styles.bgGreen}`}
+          onClick={sendMessage}
+          disabled={!message.trim()}
+        >
+          전송
+        </button>
       </div>
     </div>
   );
