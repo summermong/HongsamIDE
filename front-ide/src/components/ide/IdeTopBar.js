@@ -51,7 +51,7 @@ export default function IdeTopBar({
           <button onClick={copyUrlToClipboard}>Share</button>
           {urlCopideView ? (
             <div
-              className={`${styles.CopySuccess} rounded-md absolute text-sm border`}
+              className={`${styles.CopySuccess} rounded-md absolute text-sm`}
             >
               url 복사 완료
             </div>

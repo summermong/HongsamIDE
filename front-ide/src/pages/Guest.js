@@ -22,7 +22,7 @@ export default function Guest({ sender, setSender }) {
         onChange={(e) => {
           setGeustName(e.target.value);
         }}
-        className='rounded-md text-black'
+        className='rounded-md text-black p-1 text-center'
         type='text'
       />
       <button onClick={getGuestSendName}>확인</button>
