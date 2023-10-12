@@ -1,0 +1,6 @@
+/** @format */
+
+.resultTermContainer {
+  border-color: var(--main-color);
+  overflow-y: auto;
+}

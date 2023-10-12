@@ -1,0 +1,43 @@
+/** @format */
+
+.toggleButtonWraper {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.toggleButton {
+  z-index: 999;
+  border: none;
+  width: 40px;
+  height: 20px;
+  display: block;
+  position: relative;
+  border-radius: 25px;
+  background-color: #fff;
+  box-shadow: 0 0 16px 3px rgba(0 0 0 / 15%);
+  cursor: pointer;
+}
+
+.toggleButton_dark {
+  background-color: var(--main-color);
+  color: white;
+}
+
+.toggleButton .toggleSwitch {
+  width: 15px;
+  height: 15px;
+  position: absolute;
+  top: 50%;
+  left: 4px;
+  transform: translateY(-50%);
+  border-radius: 50%;
+  background: var(--main-color);
+  transition: all 0.4s ease-in;
+}
+
+.toggleButton .moveRight {
+  margin-left: 17px;
+  background: white;
+  transition: all 0.4s ease-in;
+  box-shadow: 0 0 16px 3px rgba(255, 255, 255, 0.15);
+}
