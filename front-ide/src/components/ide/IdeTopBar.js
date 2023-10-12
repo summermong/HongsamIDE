@@ -2,12 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import styles from './IdeTopBar.module.css';
-import Stopwatch from './Stopwatch';
-import ToggleButton from './ToggleButton';
 import DarkModeButton from './DarkModeButton';
-import Chat from './Chat';
-import { useNavigate, useParams } from 'react-router-dom';
-import axios from 'axios';
 
 export default function IdeTopBar({
   compileCode,
@@ -16,19 +11,27 @@ export default function IdeTopBar({
   isDarkMode,
   setIsDarkMode,
 }) {
-  const currentUrl = window.location.href;
+  const [urlCopideView, setUrlCopideView] = useState(false);
 
   const copyUrlToClipboard = () => {
+    const currentUrl = window.location.href;
     navigator.clipboard
       .writeText(currentUrl)
       .then(() => {
-        alert('URL이 복사되었습니다.');
+        setUrlCopideView(true);
       })
       .catch((error) => {
         console.error('URL 복사 중 오류 발생:', error);
         alert('URL을 복사하는 중 오류가 발생했습니다.');
       });
   };
+  useEffect(() => {
+    if (urlCopideView) {
+      setTimeout(() => {
+        setUrlCopideView(false);
+      }, 2000);
+    }
+  }, [urlCopideView]);
 
   return (
     <div
@@ -44,8 +47,16 @@ export default function IdeTopBar({
       </div>
       <div className='grow'></div>
       <div className='flex items-center gap-5 pr-5'>
-        <button onClick={copyUrlToClipboard}>Share</button>
-        {/* <ToggleButton /> */}
+        <div className='relative'>
+          <button onClick={copyUrlToClipboard}>Share</button>
+          {urlCopideView ? (
+            <div
+              className={`${styles.CopySuccess} rounded-md absolute text-sm border`}
+            >
+              url 복사 완료
+            </div>
+          ) : null}
+        </div>
         <button onClick={saveCode}>Save</button>
         <button onClick={fetchCode}>Pull</button>
         <button onClick={compileCode}>Run</button>

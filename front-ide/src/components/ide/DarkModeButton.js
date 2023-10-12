@@ -9,7 +9,6 @@ const DarkModeButton = ({ isDarkMode, setIsDarkMode }) => {
   const toggleButton = () => {
     isToggled ? setIsToggled(false) : setIsToggled(true);
     isDarkMode ? setIsDarkMode(false) : setIsDarkMode(true);
-    console.log(isDarkMode);
   };
 
   return (

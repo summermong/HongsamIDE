@@ -10,19 +10,19 @@ import styled from './IdeBottomBar.module.css';
 export default function IdeBottomBar({ sender, setSender, isDarkMode }) {
   const navigate = useNavigate();
   const { uuidParam, questionIdParam } = useParams();
-  console.log(uuidParam, questionIdParam);
   const [isChatOpen, setIsChatOpen] = useState(false);
 
-  /** IDE로 리다이렉트시 url 파라미터에서 받을 내용 */
+  // IDE로 리다이렉트시 url 파라미터에서 받을 내용
   const [uuid, setUuid] = useState('');
-  //roomId는 uuid + questionId
+
+  // roomId는 uuid + questionId
   const [roomId, setRoomId] = useState('');
 
+  // 채팅방에서 사용할 userName 받아오는 함수
   const fetchUserName = async () => {
     await axios
       .get('https://api.hong-sam.online/', { withCredentials: true })
       .then((res) => {
-        console.log(res.data);
         if (res.data.status === 400 && sender) {
           return;
         } else if (res.data.status === 400) {
@@ -37,6 +37,7 @@ export default function IdeBottomBar({ sender, setSender, isDarkMode }) {
       });
   };
 
+  //IDE페이지 진입 시 url로 받아온 Params를 이용하여 RoomId와 uuid를 초기화해준다
   useEffect(() => {
     fetchUserName();
     const tmpRoomId = uuidParam + questionIdParam;
@@ -46,9 +47,6 @@ export default function IdeBottomBar({ sender, setSender, isDarkMode }) {
 
   const openChat = () => {
     isChatOpen ? setIsChatOpen(false) : setIsChatOpen(true);
-    console.log('topBarUUID : ', uuid);
-    console.log('topBarROOMID : ', roomId);
-    console.log('topBarSENDER : ', sender);
   };
   return (
     <>

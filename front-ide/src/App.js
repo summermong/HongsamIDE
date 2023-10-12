@@ -4,7 +4,7 @@ import './App.css';
 import QuestionBar from './components/ide/QuestionBar';
 import JavaCodeEditor from './components/ide/JavaCodeEditor';
 import { useEffect, useState } from 'react';
-import { Route, Routes, useParams } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import Guest from './pages/Guest';
 import IdeBottomBar from './components/ide/IdeBottomBar';
 
@@ -19,9 +19,8 @@ function App() {
       if (!isResizing) return;
       const totalWidth = window.innerWidth;
       const newLeftWidth = (e.clientX / totalWidth) * 100;
-      const newRightWidth = 100 - newLeftWidth;
       setLeftWidth(newLeftWidth);
-
+      // const newRightWidth = 100 - newLeftWidth;
       // 오른쪽 div 너비도 설정할 수 있음: setRightWidth(newRightWidth);
     };
 

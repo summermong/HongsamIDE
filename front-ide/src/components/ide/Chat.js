@@ -9,7 +9,6 @@ import axios from 'axios';
 function Chat({ uuid, roomId, sender, isDarkMode }) {
   const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState('');
-  const [isMessageButton, setIsMessageButton] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   const [stompClient, setStompClient] = useState(null);
@@ -82,12 +81,7 @@ function Chat({ uuid, roomId, sender, isDarkMode }) {
       });
     }
   }, [stompClient]);
-  // const handleKeyDown = (e) => {
-  //   if (e.key === 'Enter' && !e.shiftKey) {
-  //     e.preventDefault(); // Enter 키 기본 동작(새 줄 추가) 방지
-  //     sendMessage();
-  //   }
-  // };
+
   const fetchMessages = () => {
     if (!isLoading) {
       setIsLoading(true);
@@ -140,20 +134,6 @@ function Chat({ uuid, roomId, sender, isDarkMode }) {
         ))}
       </div>
       <div className={styles.text}>
-        {/* <input
-          className={` ${isDarkMode ? 'bg-zinc-800 text-white' : 'bg-white'}`}
-          type='text'
-          placeholder='메시지를 입력해주세요.'
-          value={message}
-          onChange={(e) => {
-            setMessage(e.target.value);
-          }}
-          onKeyUp={(e) => {
-            if (e.key === 'Enter') {
-              sendMessage();
-            }
-          }}
-        /> */}
         <textarea
           type='text'
           placeholder='메시지를 입력해주세요.'

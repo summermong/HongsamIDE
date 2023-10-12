@@ -46,7 +46,7 @@ export default function JavaCodeEditor({
     tabSize: 2,
   };
 
-  const handleEditorDidMount = (editor, monaco) => {
+  const handleEditorDidMount = (editor) => {
     editorRef.current = editor;
   };
 
@@ -58,7 +58,7 @@ export default function JavaCodeEditor({
       if (!isResizing) return;
       const totalHeigth = window.innerHeight;
       const newTopHeigth = (e.clientY / totalHeigth) * 100;
-      const newBottomHeigth = 100 - newTopHeigth;
+      // const newBottomHeigth = 100 - newTopHeigth;
       setTopGeigth(newTopHeigth);
     };
 
@@ -162,7 +162,7 @@ export default function JavaCodeEditor({
         }
       });
   };
-  const handleEditorChange = (value, event) => {
+  const handleEditorChange = (value) => {
     setCode(value);
   };
   useEffect(() => {

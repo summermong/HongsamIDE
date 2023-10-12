@@ -6,3 +6,10 @@
 .IdeTopBarHeader {
   color: var(--main-color);
 }
+.CopySuccess {
+  color: white;
+  width: 230%;
+  left: -25px;
+  background-color: var(--main-color);
+  padding: 3px;
+}
