@@ -8,7 +8,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
@@ -60,22 +59,6 @@ public class ChatService {
 
         return messageList;
     }
-
-
-//    private Map<String, ChatRoom> chatRooms;
-//
-//    @PostConstruct
-//    private void init() {
-//        chatRooms = new LinkedHashMap<>();
-//    }
-//
-//    // 채팅방 생성
-//    public ChatRoom createRoom(String name) {
-//        ChatRoom chatRoom = ChatRoom.create(name);
-//        chatRooms.put(chatRoom.getRoomId(), chatRoom);
-//        log.info("채팅방 개설 성공");
-//        return chatRoom;
-//    }
 
 }
 
