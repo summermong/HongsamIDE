@@ -1,0 +1,8 @@
+/** @format */
+
+.codeEditorContainer {
+  position: relative;
+  height: calc(100vh - 49px);
+  margin-top: 49px;
+  flex-shrink: 0;
+}

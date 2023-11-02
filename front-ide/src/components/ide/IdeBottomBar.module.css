@@ -1,0 +1,12 @@
+/** @format */
+
+.ChatContainer {
+  position: fixed;
+  right: 15px;
+  bottom: 60px;
+  border: 1px solid var(--main-color);
+  border-radius: 10px;
+}
+.ideTopBarContainer {
+  border-color: var(--main-color);
+}

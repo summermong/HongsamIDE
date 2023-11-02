@@ -1,0 +1,17 @@
+/** @format */
+
+.modalContainer {
+  position: absolute;
+  top: 35%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-color: var(--main-color);
+}
+.modalButton {
+  background-color: var(--main-color);
+  color: white;
+}
+.modalButton:hover {
+  background-color: var(--mainDark-color);
+  color: white;
+}
