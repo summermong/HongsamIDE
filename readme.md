@@ -60,6 +60,4 @@
 ```
 
 ## 시연 영상 (이미지 클릭 시 새 페이지에서 재생됩니다.)
-- 전체 시연 영상
-  [![image](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbfdCrW%2FbtsBofVUUuE%2FBdKhY4T7q86UX97rgDVP51%2Fimg.png)]([https://tv.kakao.com/v/442042915](https://tv.kakao.com/v/442953438)https://tv.kakao.com/v/442953438)
-  
+- 준비중입니다.
